@@ -1,63 +1,68 @@
-package com.example.demo.entity;
+package com.example.demo.model;
+
 import jakarta.persistence.*;
-import java.time.LocalDataTime;
-@Entity;
-public class InvestorProfile{
-    @Id;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(
+    name = "investor_profile",
+    uniqueConstraints = {
+        @UniqueConstraint(columnNames = "investorId"),
+        @UniqueConstraint(columnNames = "email")
+    }
+)
+public class InvestorProfile {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private String investorId;
+
+    @Column(nullable = false)
     private String fullName;
+
+    @Column(nullable = false)
     private String email;
-    private Boolean active;
+
+    private Boolean active = true;
+
     private LocalDateTime createdAt;
-    
 
-    public Long getId() {
-        return id;
+    // ✅ Default Constructor
+    public InvestorProfile() {
+        this.createdAt = LocalDateTime.now();
+        this.active = true;
     }
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public String getInvestorId() {
-        return investorId;
-       }
-    public void setInvestorId(String investorId) {
-        this.investorId = investorId;
-    }
-    public String getFullName() {
-        return fullName;
-    }
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-    public String getEmail() {
-        return email;
-    }
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    public Boolean getActive() {
-        return active;
-    }
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-    public LocalDataTime getCreatedAt() {
-        return createdAt;
-    }
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-    
-     public InvestorProfile(Long id,String investorId, String fullName, String email, Boolean active,LocalDateTime createdAt) {
+
+    // ✅ Parameterized Constructor
+    public InvestorProfile(Long id, String investorId, String fullName, String email,
+                           Boolean active, LocalDateTime createdAt) {
         this.id = id;
         this.investorId = investorId;
         this.fullName = fullName;
         this.email = email;
         this.active = active;
         this.createdAt = createdAt;
-       }
-       public InvestorProfile() {
-       }
+    }
 
+    // ✅ Getters & Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public String getInvestorId() { return investorId; }
+    public void setInvestorId(String investorId) { this.investorId = investorId; }
+
+    public String getFullName() { return fullName; }
+    public void setFullName(String fullName) { this.fullName = fullName; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
+    public Boolean getActive() { return active; }
+    public void setActive(Boolean active) { this.active = active; }
+
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 }
