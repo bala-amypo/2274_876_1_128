@@ -4,26 +4,15 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(
-    name = "investor_profile",
-    uniqueConstraints = {
-        @UniqueConstraint(columnNames = "investorId"),
-        @UniqueConstraint(columnNames = "email")
-    }
-)
+
 public class InvestorProfile {
 
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false)
     private String investorId;
-
-    @Column(nullable = false)
     private String fullName;
-
-    @Column(nullable = false)
+    @Column(unique=true)
     private String email;
 
     private Boolean active = true;
