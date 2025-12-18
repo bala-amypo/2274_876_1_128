@@ -14,7 +14,7 @@ public class AllocationSnapshotServiceImpl implements AllocationSnapshotService 
 
     private final AllocationSnapshotRepository repository;
 
-    public AllocationSnapshotServiceImpl(AllocationSnapshotRepository repository) {
+    public AllocationSnapshotServiceImpl(AllocationSnapshotRecordRepository repository) {
         this.repository = repository;
     }
 
