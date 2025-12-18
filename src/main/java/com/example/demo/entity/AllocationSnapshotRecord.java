@@ -9,20 +9,18 @@ public class AllocationSnapshotRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private Long investorId;
-
     private LocalDateTime snapshotDate;
-
     private Double totalPortfolioValue;
-
     @Lob
     private String allocationJson;
 
-    // ✅ Default Constructor
-    public AllocationSnapshotRecord() {}
+   
+    public AllocationSnapshotRecord() {
+    
+    }
 
-    // ✅ Parameterized Constructor
+    
     public AllocationSnapshotRecord(Long id, Long investorId,
                                     LocalDateTime snapshotDate,
                                     Double totalPortfolioValue,
@@ -34,7 +32,7 @@ public class AllocationSnapshotRecord {
         this.allocationJson = allocationJson;
     }
 
-    // ✅ Getters & Setters
+   
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

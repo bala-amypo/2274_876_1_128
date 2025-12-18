@@ -11,31 +11,23 @@ public class RebalancingAlertRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private Long investorId;
-
     @Enumerated(EnumType.STRING)
     private AssetClassType assetClass;
-
     private Double currentPercentage;
-
     private Double targetPercentage;
-
     @Enumerated(EnumType.STRING)
     private AlertSeverity severity;
-
     private String message;
-
     private LocalDateTime alertDate;
-
     private Boolean resolved = false;
 
-    // ✅ Default Constructor
+    
     public RebalancingAlertRecord() {
         this.resolved = false;
     }
 
-    // ✅ Parameterized Constructor
+    
     public RebalancingAlertRecord(Long id, Long investorId,
                                   AssetClassType assetClass,
                                   Double currentPercentage,
@@ -55,7 +47,7 @@ public class RebalancingAlertRecord {
         this.resolved = resolved;
     }
 
-    // ✅ Getters & Setters
+    
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
