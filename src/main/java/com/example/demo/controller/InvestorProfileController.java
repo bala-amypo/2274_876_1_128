@@ -26,7 +26,7 @@ public class InvestorProfileController {
     public InvestorProfile getById(@PathVariable Long id) {
         return service.getInvestorById(id);
     }
-
+ 
     @GetMapping
     public List<InvestorProfile> getAll() {
         return service.getAllInvestors();
