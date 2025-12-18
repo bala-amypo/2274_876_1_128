@@ -1,22 +1,24 @@
 package com.example.demo.entity;
-import com.example.demo.enums.AssetClassType;
 
-@Enumerated(EnumType.STRING)
-private AssetClassType assetClass;
-package com.example.demo.enums.AssetClassType;
+import com.example.demo.enums.AssetClassType;
 import jakarta.persistence.*;
 
 @Entity
 public class AssetClassAllocationRule {
 
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    // @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private Long investorId;
-    @Enumerated(EnumType.STRING)
+
+    @Enumerated(EnumType.STRING)  
     private AssetClassType assetClass;
+
     private Double targetPercentage;
+
     private Boolean active = true;
+
 
    
     public AssetClassAllocationRule() {
