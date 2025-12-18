@@ -53,7 +53,9 @@ public class InvestorProfile{
         this.id = id;
         this.investorId = investorId;
         this.fullName = fullName;
-        
+        this.email = email;
+        this.active = active;
+        this.createdAt = createdAt;
        }
        public InvestorProfile() {
        }
