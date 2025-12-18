@@ -1,6 +1,6 @@
 package com.example.demo.entity;
 import jakarta.persistence.*;
-
+import java.time.LocalDataTime;
 @Entity;
 public class InvestorProfile{
     @Id;
