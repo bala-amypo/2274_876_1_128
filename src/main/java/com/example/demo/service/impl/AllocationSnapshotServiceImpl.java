@@ -6,13 +6,13 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.AllocationSnapshotRecord;
-import com.example.demo.repository.AllocationSnapshotRepository;
+import com.example.demo.repository.AllocationSnapshotRecordRepository;
 import com.example.demo.service.AllocationSnapshotService;
 
 @Service
 public class AllocationSnapshotServiceImpl implements AllocationSnapshotService {
 
-    private final AllocationSnapshotRepository repository;
+    private final AllocationSnapshotRecordRepository repository;
 
     public AllocationSnapshotServiceImpl(AllocationSnapshotRecordRepository repository) {
         this.repository = repository;
