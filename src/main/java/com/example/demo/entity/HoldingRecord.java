@@ -10,20 +10,17 @@ public class HoldingRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private Long investorId;
-
     @Enumerated(EnumType.STRING)
     private AssetClassType assetClass;
-
     private Double currentValue;
-
     private LocalDateTime snapshotDate;
 
-    // ✅ Default Constructor
-    public HoldingRecord() {}
+    
+    public HoldingRecord() {
 
-    // ✅ Parameterized Constructor
+    }
+
     public HoldingRecord(Long id, Long investorId,
                          AssetClassType assetClass,
                          Double currentValue,
@@ -35,7 +32,7 @@ public class HoldingRecord {
         this.snapshotDate = snapshotDate;
     }
 
-    // ✅ Getters & Setters
+    
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
