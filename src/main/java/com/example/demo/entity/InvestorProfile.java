@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class InvestorProfile {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
@@ -30,13 +30,13 @@ public class InvestorProfile {
 
     private LocalDateTime createdAt;
 
-    // ✅ Default Constructor
+    
     public InvestorProfile() {
         this.createdAt = LocalDateTime.now();
         this.active = true;
     }
 
-    // ✅ Parameterized Constructor
+    
     public InvestorProfile(Long id, String investorId, String fullName, String email,
                            Boolean active, LocalDateTime createdAt) {
         this.id = id;
@@ -47,7 +47,7 @@ public class InvestorProfile {
         this.createdAt = createdAt;
     }
 
-    // ✅ Getters & Setters
+    
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

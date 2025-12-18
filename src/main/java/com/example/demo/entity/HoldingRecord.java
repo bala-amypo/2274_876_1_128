@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class HoldingRecord {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+   // @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long investorId;
     @Enumerated(EnumType.STRING)
