@@ -1,0 +1,48 @@
+package com.example.demo.service.impl;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.example.demo.model.InvestorProfile;
+import com.example.demo.repository.InvestorProfileRepository;
+import com.example.demo.service.InvestorProfileService;
+
+@Service
+public class InvestorProfileServiceImpl implements InvestorProfileService {
+
+    private final InvestorProfileRepository repository;
+
+    public InvestorProfileServiceImpl(InvestorProfileRepository repository) {
+        this.repository = repository;
+    }
+
+    @Override
+    public InvestorProfile createInvestor(InvestorProfile investor) {
+        return repository.save(investor);
+    }
+
+    @Override
+    public InvestorProfile getInvestorById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Investor not found"));
+    }
+
+    @Override
+    public InvestorProfile findByInvestorId(String investorId) {
+        return repository.findByInvestorId(investorId)
+                .orElseThrow(() -> new RuntimeException("Investor not found"));
+    }
+
+    @Override
+    public List<InvestorProfile> getAllInvestors() {
+        return repository.findAll();
+    }
+
+    @Override
+    public InvestorProfile updateInvestorStatus(Long id, boolean active) {
+        InvestorProfile investor = getInvestorById(id);
+        investor.setActive(active);
+        return repository.save(investor);
+    }
+}
