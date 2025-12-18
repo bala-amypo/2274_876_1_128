@@ -43,10 +43,19 @@ public class InvestorProfile{
         this.active = active;
     }
     public LocalDataTime getCreatedAt() {
-        return ;
+        return createdAt;
     }
-    public void setFullName(LocalDateTime createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
     
+     public InvestorProfile(Long id,String investorId, String fullName, String email, Boolean active,LocalDateTime createdAt) {
+        this.id = id;
+        this.investorId = investorId;
+        this.fullName = fullName;
+        
+       }
+       public InvestorProfile() {
+       }
+
 }
