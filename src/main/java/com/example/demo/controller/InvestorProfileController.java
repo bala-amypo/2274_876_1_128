@@ -21,7 +21,7 @@ public class InvestorProfileController {
     public InvestorProfile create(@RequestBody InvestorProfile investor) {
         return service.createInvestor(investor);
     }
-
+ 
     @GetMapping("/{id}")
     public InvestorProfile getById(@PathVariable Long id) {
         return service.getInvestorById(id);
