@@ -1,5 +1,9 @@
 package com.example.demo.entity;
+import com.example.demo.enums.AssetClassType;
 
+@Enumerated(EnumType.STRING)
+private AssetClassType assetClass;
+package com.example.demo.enums.AssetClassType;
 import jakarta.persistence.*;
 
 @Entity
