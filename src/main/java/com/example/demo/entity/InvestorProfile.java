@@ -21,8 +21,8 @@ public class InvestorProfile {
 
     
     public InvestorProfile() {
-        this.createdAt = LocalDateTime.now();
-        this.active = true;
+        // this.createdAt = LocalDateTime.now();
+        // this.active = true;
     }
 
     
