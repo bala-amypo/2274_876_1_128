@@ -1,9 +1,7 @@
 package com.example.demo.service.impl;
 
 import java.util.List;
-
 import org.springframework.stereotype.Service;
-
 import com.example.demo.model.InvestorProfile;
 import com.example.demo.repository.InvestorProfileRepository;
 import com.example.demo.service.InvestorProfileService;
@@ -13,6 +11,7 @@ public class InvestorProfileServiceImpl implements InvestorProfileService {
 
     private final InvestorProfileRepository repository;
 
+    
     public InvestorProfileServiceImpl(InvestorProfileRepository repository) {
         this.repository = repository;
     }
