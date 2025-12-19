@@ -1,16 +1,19 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.HoldingRecord;
+import com.example.demo.entity.enums.AssetClassType;
 
 import java.util.List;
 
 public interface HoldingRecordService {
 
-    HoldingRecord recordHolding(HoldingRecord holding);
+    HoldingRecord saveHolding(HoldingRecord record);
 
     List<HoldingRecord> getHoldingsByInvestor(Long investorId);
 
-    HoldingRecord getHoldingById(Long id);
+    List<HoldingRecord> getHoldingsAboveValue(Double value);
 
-    List<HoldingRecord> getAllHoldings();
+    List<HoldingRecord> getHoldingsByInvestorAndAsset(
+            Long investorId,
+            AssetClassType assetClass);
 }

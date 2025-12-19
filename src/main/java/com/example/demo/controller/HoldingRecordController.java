@@ -1,42 +1,53 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.HoldingRecord;
+import com.example.demo.entity.enums.AssetClassType;
 import com.example.demo.service.HoldingRecordService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/holdings")
+@Tag(name = "Holding Record API")
 public class HoldingRecordController {
 
-    private final HoldingRecordService holdingService;
+    private final HoldingRecordService service;
 
-    public HoldingRecordController(
-            HoldingRecordService holdingService) {
-        this.holdingService = holdingService;
+    public HoldingRecordController(HoldingRecordService service) {
+        this.service = service;
     }
 
     @PostMapping
-    public HoldingRecord recordHolding(
-            @RequestBody HoldingRecord holding) {
-        return holdingService.recordHolding(holding);
+    public ResponseEntity<HoldingRecord> createHolding(
+            @RequestBody HoldingRecord record) {
+        return new ResponseEntity<>(
+                service.saveHolding(record),
+                HttpStatus.CREATED);
     }
 
     @GetMapping("/investor/{investorId}")
-    public List<HoldingRecord> getHoldingsByInvestor(
+    public ResponseEntity<List<HoldingRecord>> getByInvestor(
             @PathVariable Long investorId) {
-        return holdingService.getHoldingsByInvestor(investorId);
+        return ResponseEntity.ok(
+                service.getHoldingsByInvestor(investorId));
     }
 
-    @GetMapping("/{id}")
-    public HoldingRecord getHoldingById(
-            @PathVariable Long id) {
-        return holdingService.getHoldingById(id);
+    @GetMapping("/above-value/{value}")
+    public ResponseEntity<List<HoldingRecord>> getAboveValue(
+            @PathVariable Double value) {
+        return ResponseEntity.ok(
+                service.getHoldingsAboveValue(value));
     }
 
-    @GetMapping
-    public List<HoldingRecord> getAllHoldings() {
-        return holdingService.getAllHoldings();
+    @GetMapping("/investor/{investorId}/asset/{assetClass}")
+    public ResponseEntity<List<HoldingRecord>> getByInvestorAndAsset(
+            @PathVariable Long investorId,
+            @PathVariable AssetClassType assetClass) {
+        return ResponseEntity.ok(
+                service.getHoldingsByInvestorAndAsset(investorId, assetClass));
     }
 }
