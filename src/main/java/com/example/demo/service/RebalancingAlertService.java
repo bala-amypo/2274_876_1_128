@@ -1,14 +1,18 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.RebalancingAlert;
-
 import java.util.List;
+
+import com.example.demo.entity.RebalancingAlertRecord;
 
 public interface RebalancingAlertService {
 
-    RebalancingAlert generateAlert(RebalancingAlert alert);
+    RebalancingAlertRecord createAlert(RebalancingAlertRecord alert);
 
-    List<RebalancingAlert> getAlertsByInvestor(Long investorId);
+    RebalancingAlertRecord resolveAlert(Long id);
 
-    List<RebalancingAlert> getTriggeredAlerts();
+    List<RebalancingAlertRecord> getAlertsByInvestor(Long investorId);
+
+    RebalancingAlertRecord getAlertById(Long id);
+
+    List<RebalancingAlertRecord> getAllAlerts();
 }

@@ -1,49 +1,63 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.RebalancingAlert;
-import com.example.demo.repository.RebalancingAlertRepository;
-import com.example.demo.service.RebalancingAlertService;
-import org.springframework.stereotype.Service;
-
+import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
+import com.example.demo.entity.RebalancingAlertRecord;
+import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.repository.RebalancingAlertRecordRepository;
+import com.example.demo.service.RebalancingAlertService;
+
 @Service
-public class RebalancingAlertServiceImpl
-        implements RebalancingAlertService {
+public class RebalancingAlertServiceImpl implements RebalancingAlertService {
 
-    private final RebalancingAlertRepository repository;
+    private final RebalancingAlertRecordRepository alertRepo;
 
-    public RebalancingAlertServiceImpl(
-            RebalancingAlertRepository repository) {
-        this.repository = repository;
+    public RebalancingAlertServiceImpl(RebalancingAlertRecordRepository alertRepo) {
+        this.alertRepo = alertRepo;
     }
 
     @Override
-    public RebalancingAlert generateAlert(RebalancingAlert alert) {
+    public RebalancingAlertRecord createAlert(RebalancingAlertRecord alert) {
 
-        double deviation = Math.abs(
-                alert.getCurrentPercentage()
-                        - alert.getTargetPercentage());
-
-        alert.setDeviation(deviation);
-
-        // PDF CONDITION
-        if (deviation > 5.0) {
-            alert.setAlertTriggered(true);
-        } else {
-            alert.setAlertTriggered(false);
+        if (alert.getCurrentPercentage() <= alert.getTargetPercentage()) {
+            throw new IllegalArgumentException(
+                "currentPercentage > targetPercentage");
         }
 
-        return repository.save(alert);
+        alert.setResolved(false);
+        alert.setAlertDate(LocalDateTime.now());
+
+        return alertRepo.save(alert);
     }
 
     @Override
-    public List<RebalancingAlert> getAlertsByInvestor(Long investorId) {
-        return repository.findByInvestorId(investorId);
+    public RebalancingAlertRecord resolveAlert(Long id) {
+
+        RebalancingAlertRecord alert = alertRepo.findById(id)
+                .orElseThrow(() ->
+                    new ResourceNotFoundException("Alert not found"));
+
+        alert.setResolved(true);
+        return alertRepo.save(alert);
     }
 
     @Override
-    public List<RebalancingAlert> getTriggeredAlerts() {
-        return repository.findByAlertTriggeredTrue();
+    public List<RebalancingAlertRecord> getAlertsByInvestor(Long investorId) {
+        return alertRepo.findByInvestorId(investorId);
+    }
+
+    @Override
+    public RebalancingAlertRecord getAlertById(Long id) {
+        return alertRepo.findById(id)
+                .orElseThrow(() ->
+                    new ResourceNotFoundException("Alert not found"));
+    }
+
+    @Override
+    public List<RebalancingAlertRecord> getAllAlerts() {
+        return alertRepo.findAll();
     }
 }
