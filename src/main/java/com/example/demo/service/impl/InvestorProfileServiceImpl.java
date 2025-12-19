@@ -20,7 +20,7 @@ public class InvestorProfileServiceImpl implements InvestorProfileService {
 
     @Override
     public InvestorProfile createInvestor(InvestorProfile investor) {
-        
+        return repository.save(investor);
     }
 
     @Override
