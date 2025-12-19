@@ -1,33 +1,44 @@
-package com.example.demo.model;
+package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-
+@Table(
+    name = "investor_profile",
+    uniqueConstraints = {
+        @UniqueConstraint(columnNames = "investorId"),
+        @UniqueConstraint(columnNames = "email")
+    }
+)
 public class InvestorProfile {
 
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private String investorId;
+
+    @Column(nullable = false)
     private String fullName;
-    @Column(unique=true)
+
+    @Column(nullable = false)
     private String email;
 
-    private Boolean active = true;
+    private Boolean active;
 
     private LocalDateTime createdAt;
 
     
     public InvestorProfile() {
-        // this.createdAt = LocalDateTime.now();
-        // this.active = true;
+        this.active = true;
+        this.createdAt = LocalDateTime.now();
     }
 
     
-    public InvestorProfile(Long id, String investorId, String fullName, String email,
-                           Boolean active, LocalDateTime createdAt) {
+    public InvestorProfile(Long id, String investorId, String fullName,
+                           String email, Boolean active, LocalDateTime createdAt) {
         this.id = id;
         this.investorId = investorId;
         this.fullName = fullName;
