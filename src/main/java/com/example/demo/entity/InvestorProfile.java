@@ -20,7 +20,6 @@ public class InvestorProfile {
     @Column(unique=true)
     private String investorId;
 
-    @Column(nullable = false)
     private String fullName;
 
     @Column(unique=true)
