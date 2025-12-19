@@ -17,13 +17,13 @@ public class InvestorProfile {
     
     private Long id;
 
-    @Column(nullable = false)
+    @Column(unique=true)
     private String investorId;
 
     @Column(nullable = false)
     private String fullName;
 
-    @Column(nullable = false)
+    @Column(unique=true)
     private String email;
 
     private Boolean active;
