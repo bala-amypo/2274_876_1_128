@@ -13,15 +13,14 @@ public class InvestorProfileServiceImpl implements InvestorProfileService {
 
     private final InvestorProfileRepository repository;
 
-    // ✅ Constructor Injection (MANDATORY for tests)
+    
     public InvestorProfileServiceImpl(InvestorProfileRepository repository) {
         this.repository = repository;
     }
 
     @Override
     public InvestorProfile createInvestor(InvestorProfile investor) {
-        // default active already set in entity constructor
-        return repository.save(investor);
+        
     }
 
     @Override
