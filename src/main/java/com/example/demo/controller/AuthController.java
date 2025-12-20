@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/users")
-public class Controller {
+public class AuthController {
 
     private final UserAccountService service;
 
-    public UserAccountController(UserAccountService service) {
+    public AuthController(UserAccountService service) {
         this.service = service;
     }
 
