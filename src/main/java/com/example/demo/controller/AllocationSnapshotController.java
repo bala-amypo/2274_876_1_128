@@ -1,39 +1,40 @@
 package com.example.demo.controller;
 
-import java.util.List;
-
+import com.example.demo.entity.AllocationSnapshotRecord;
+import com.example.demo.service.AllocationSnapshotService;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.model.AllocationSnapshotRecord;
-import com.example.demo.service.AllocationSnapshotService;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/snapshots")
 public class AllocationSnapshotController {
 
-    private final AllocationSnapshotService service;
+    private final AllocationSnapshotService snapshotService;
 
-    public AllocationSnapshotController(AllocationSnapshotService service) {
-        this.service = service;
+    public AllocationSnapshotController(AllocationSnapshotService snapshotService) {
+        this.snapshotService = snapshotService;
     }
 
     @PostMapping("/compute/{investorId}")
-    public AllocationSnapshotRecord compute(@PathVariable Long investorId) {
-        return service.computeSnapshot(investorId);
+    public AllocationSnapshotRecord computeSnapshot(
+            @PathVariable Long investorId) {
+        return snapshotService.computeSnapshot(investorId);
+    }
+
+    @GetMapping("/investor/{investorId}")
+    public List<AllocationSnapshotRecord> getByInvestor(
+            @PathVariable Long investorId) {
+        return snapshotService.getSnapshotsByInvestor(investorId);
     }
 
     @GetMapping("/{id}")
     public AllocationSnapshotRecord getById(@PathVariable Long id) {
-        return service.getSnapshotById(id);
-    }
-
-    @GetMapping("/investor/{investorId}")
-    public List<AllocationSnapshotRecord> getByInvestor(@PathVariable Long investorId) {
-        return service.getSnapshotsByInvestor(investorId);
+        return snapshotService.getSnapshotById(id);
     }
 
     @GetMapping
     public List<AllocationSnapshotRecord> getAll() {
-        return service.getAllSnapshots();
+        return snapshotService.getAllSnapshots();
     }
 }
