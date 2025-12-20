@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class AllocationSnapshotRecord {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long investorId;
@@ -26,6 +26,7 @@ public class AllocationSnapshotRecord {
                                     LocalDateTime snapshotDate,
                                     Double totalPortfolioValue,
                                     String allocationJson) {
+        this.id=id;
         this.investorId = investorId;
         this.snapshotDate = snapshotDate;
         this.totalPortfolioValue = totalPortfolioValue;
