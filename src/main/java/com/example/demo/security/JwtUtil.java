@@ -2,7 +2,9 @@ package com.example.demo.security;
 
 import java.util.Date;
 
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 
 import javax.crypto.SecretKey;
@@ -12,11 +14,13 @@ public class JwtUtil {
     private final SecretKey key;
     private final long validityInMs;
 
+    // ✅ REQUIRED CONSTRUCTOR
     public JwtUtil(String secret, long validityInMs) {
         this.key = Keys.hmacShaKeyFor(secret.getBytes());
         this.validityInMs = validityInMs;
     }
 
+    // 🔐 Generate token with claims
     public String generateToken(Long userId, String email, String role) {
 
         Date now = new Date();
@@ -32,15 +36,17 @@ public class JwtUtil {
                 .compact();
     }
 
+    // 🔍 Validate token
     public boolean validateToken(String token) {
         try {
             parseClaims(token);
             return true;
-        } catch (JwtException | IllegalArgumentException e) {
+        } catch (Exception e) {
             return false;
         }
     }
 
+    // 🔍 Parse claims
     public Claims parseClaims(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(key)
@@ -49,7 +55,10 @@ public class JwtUtil {
                 .getBody();
     }
 
+    // ⏰ Check expiry
     public boolean isTokenExpired(String token) {
-        return parseClaims(token).getExpiration().before(new Date());
+        return parseClaims(token)
+                .getExpiration()
+                .before(new Date());
     }
 }
