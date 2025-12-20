@@ -1,7 +1,8 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.AllocationSnapshotRecord;
+
 import java.util.List;
-import com.example.demo.model.AllocationSnapshotRecord;
 
 public interface AllocationSnapshotService {
 
