@@ -44,12 +44,12 @@ public class SecurityConfig {
            
             .csrf(csrf -> csrf.disable())
 
-            // Stateless session
+            
             .sessionManagement(session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
 
-            // Authorization rules
+            
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
                     "/auth/register",
@@ -62,7 +62,7 @@ public class SecurityConfig {
                 .anyRequest().permitAll()
             )
 
-            // JWT filter
+            
             .addFilterBefore(
                 jwtFilter,
                 UsernamePasswordAuthenticationFilter.class
