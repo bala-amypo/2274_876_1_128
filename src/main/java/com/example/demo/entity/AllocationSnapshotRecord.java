@@ -1,52 +1,12 @@
-package com.example.demo.model;
+package com.example.demo.repository;
 
-import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import com.example.demo.entity.AllocationSnapshotRecord;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Entity
-public class AllocationSnapshotRecord {
+import java.util.List;
 
-    @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public interface AllocationSnapshotRecordRepository
+        extends JpaRepository<AllocationSnapshotRecord, Long> {
 
-    private Long investorId;
-
-    private LocalDateTime snapshotDate;
-
-    private Double totalPortfolioValue;
-
-    @Lob
-    private String allocationJson;
-
- 
-    public AllocationSnapshotRecord() {}
-
-    
-    public AllocationSnapshotRecord(Long id, Long investorId,
-                                    LocalDateTime snapshotDate,
-                                    Double totalPortfolioValue,
-                                    String allocationJson) {
-        this.id = id;
-        this.investorId = investorId;
-        this.snapshotDate = snapshotDate;
-        this.totalPortfolioValue = totalPortfolioValue;
-        this.allocationJson = allocationJson;
-    }
-
-    
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public Long getInvestorId() { return investorId; }
-    public void setInvestorId(Long investorId) { this.investorId = investorId; }
-
-    public LocalDateTime getSnapshotDate() { return snapshotDate; }
-    public void setSnapshotDate(LocalDateTime snapshotDate) { this.snapshotDate = snapshotDate; }
-
-    public Double getTotalPortfolioValue() { return totalPortfolioValue; }
-    public void setTotalPortfolioValue(Double totalPortfolioValue) { this.totalPortfolioValue = totalPortfolioValue; }
-
-    public String getAllocationJson() { return allocationJson; }
-    public void setAllocationJson(String allocationJson) { this.allocationJson = allocationJson; }
+    List<AllocationSnapshotRecord> findByInvestorId(Long investorId);
 }
