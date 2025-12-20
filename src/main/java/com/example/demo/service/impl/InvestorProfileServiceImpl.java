@@ -1,6 +1,7 @@
 package com.example.demo.service.impl;
 
 import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.InvestorProfile;
@@ -13,7 +14,6 @@ public class InvestorProfileServiceImpl implements InvestorProfileService {
 
     private final InvestorProfileRepository repository;
 
-    
     public InvestorProfileServiceImpl(InvestorProfileRepository repository) {
         this.repository = repository;
     }
@@ -27,14 +27,16 @@ public class InvestorProfileServiceImpl implements InvestorProfileService {
     public InvestorProfile getInvestorById(Long id) {
         return repository.findById(id)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Investor not found"));
+                        new ResourceNotFoundException(
+                                "Investor not found with id: " + id));
     }
 
     @Override
     public InvestorProfile findByInvestorId(String investorId) {
         return repository.findByInvestorId(investorId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Investor not found"));
+                        new ResourceNotFoundException(
+                                "Investor not found with investorId: " + investorId));
     }
 
     @Override
