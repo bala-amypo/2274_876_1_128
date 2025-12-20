@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class AllocationSnapshotServiceImpl implements AllocationSnapshotService {
@@ -23,7 +22,6 @@ public class AllocationSnapshotServiceImpl implements AllocationSnapshotService 
             HoldingRecordRepository holdingRepo,
             AssetClassAllocationRuleRepository ruleRepo,
             RebalancingAlertRecordRepository alertRepo) {
-
         this.snapshotRepo = snapshotRepo;
         this.holdingRepo = holdingRepo;
         this.ruleRepo = ruleRepo;
@@ -46,10 +44,9 @@ public class AllocationSnapshotServiceImpl implements AllocationSnapshotService 
             throw new IllegalArgumentException("Total portfolio value must be > 0");
         }
 
-        Map<String, Double> allocationMap = new HashMap<>();
-
+        Map<String, Double> valueMap = new HashMap<>();
         for (HoldingRecord h : holdings) {
-            allocationMap.merge(
+            valueMap.merge(
                     h.getAssetClass().name(),
                     h.getCurrentValue(),
                     Double::sum
@@ -57,23 +54,20 @@ public class AllocationSnapshotServiceImpl implements AllocationSnapshotService 
         }
 
         Map<String, Double> percentageMap = new HashMap<>();
-        allocationMap.forEach((k, v) ->
-                percentageMap.put(k, (v / totalValue) * 100)
-        );
-
-        String allocationJson = percentageMap.toString();
+        for (Map.Entry<String, Double> e : valueMap.entrySet()) {
+            percentageMap.put(e.getKey(), (e.getValue() / totalValue) * 100);
+        }
 
         AllocationSnapshotRecord snapshot =
                 new AllocationSnapshotRecord(
                         investorId,
                         LocalDateTime.now(),
                         totalValue,
-                        allocationJson
+                        percentageMap.toString()
                 );
 
         snapshotRepo.save(snapshot);
 
-        // Alerts
         List<AssetClassAllocationRule> rules =
                 ruleRepo.findActiveRulesHql(investorId);
 
@@ -84,9 +78,7 @@ public class AllocationSnapshotServiceImpl implements AllocationSnapshotService 
             if (currentPct != null &&
                     currentPct > rule.getTargetPercentage()) {
 
-                RebalancingAlertRecord alert =
-                        new RebalancingAlertRecord();
-
+                RebalancingAlertRecord alert = new RebalancingAlertRecord();
                 alert.setInvestorId(investorId);
                 alert.setAssetClass(rule.getAssetClass());
                 alert.setCurrentPercentage(currentPct);

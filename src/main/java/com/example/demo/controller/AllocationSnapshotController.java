@@ -17,24 +17,23 @@ public class AllocationSnapshotController {
     }
 
     @PostMapping("/compute/{investorId}")
-    public AllocationSnapshotRecord computeSnapshot(
-            @PathVariable Long investorId) {
+    public AllocationSnapshotRecord compute(@PathVariable Long investorId) {
         return snapshotService.computeSnapshot(investorId);
     }
 
     @GetMapping("/investor/{investorId}")
-    public List<AllocationSnapshotRecord> getByInvestor(
+    public List<AllocationSnapshotRecord> byInvestor(
             @PathVariable Long investorId) {
         return snapshotService.getSnapshotsByInvestor(investorId);
     }
 
     @GetMapping("/{id}")
-    public AllocationSnapshotRecord getById(@PathVariable Long id) {
+    public AllocationSnapshotRecord byId(@PathVariable Long id) {
         return snapshotService.getSnapshotById(id);
     }
 
     @GetMapping
-    public List<AllocationSnapshotRecord> getAll() {
+    public List<AllocationSnapshotRecord> all() {
         return snapshotService.getAllSnapshots();
     }
 }
