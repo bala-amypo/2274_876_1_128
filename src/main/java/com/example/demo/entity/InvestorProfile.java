@@ -14,28 +14,27 @@ import java.time.LocalDateTime;
 public class InvestorProfile {
 
     @Id
-    
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique=true)
+    @Column(unique = true, nullable = false)
     private String investorId;
 
     private String fullName;
 
-    @Column(unique=true)
+    @Column(unique = true, nullable = false)
     private String email;
 
+    @Column(nullable = false)
     private Boolean active;
 
     private LocalDateTime createdAt;
 
-    
     public InvestorProfile() {
         this.active = true;
         this.createdAt = LocalDateTime.now();
     }
 
-    
     public InvestorProfile(Long id, String investorId, String fullName,
                            String email, Boolean active, LocalDateTime createdAt) {
         this.id = id;
@@ -46,7 +45,6 @@ public class InvestorProfile {
         this.createdAt = createdAt;
     }
 
-    
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
