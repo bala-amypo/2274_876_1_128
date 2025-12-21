@@ -21,20 +21,27 @@ public class SecurityConfig {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
-    // PasswordEncoder bean (PDF rule)
+    @Bean
+     public JwtUtil jwtUtil() {
+        return new JwtUtil(
+            "my-secret-key-for-jwt-123456",
+            3600000   // 1 hour
+        );
+    }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    // AuthenticationManager
+   
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
 
-    // HTTP Security configuration
+    
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
