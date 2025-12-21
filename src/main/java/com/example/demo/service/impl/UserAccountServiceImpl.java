@@ -24,7 +24,7 @@ public class UserAccountServiceImpl implements UserAccountService {
         userAccount.setOpassword(
                 passwordEncoder.encode(userAccount.getOpassword())
         );
-        userAccount.setOrole(RoleType.USER);
+        userAccount.setOrole(RoleType.INVESTOR);
         userAccount.setOactive(true);
         return repository.save(userAccount);
     }
