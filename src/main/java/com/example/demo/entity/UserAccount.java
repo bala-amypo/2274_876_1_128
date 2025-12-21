@@ -1,6 +1,5 @@
+package com.example.demo.entity;
 import com.example.demo.entity.enums.RoleType;
-
-
 import jakarta.persistence.*;
 
 @Entity
