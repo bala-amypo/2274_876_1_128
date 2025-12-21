@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class UserAccount {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long oid;
 
     @Column(unique = true, nullable = false)
@@ -24,7 +24,24 @@ public class UserAccount {
 
     private Boolean oactive;
 
-    public UserAccount() {}
+    
+    public UserAccount() {
+    }
+
+    
+    public UserAccount(Long oid,
+                       String ousername,
+                       String oemail,
+                       String opassword,
+                       RoleType orole,
+                       Boolean oactive) {
+        this.oid = oid;
+        this.ousername = ousername;
+        this.oemail = oemail;
+        this.opassword = opassword;
+        this.orole = orole;
+        this.oactive = oactive;
+    }
 
     public Long getOid() {
         return oid;
