@@ -1,7 +1,6 @@
 package com.example.demo.service.impl;
 import com.example.demo.entity.enums.RoleType;
 
-import com.example.demo.entity.RoleType;
 import com.example.demo.entity.UserAccount;
 import com.example.demo.repository.UserAccountRepository;
 import com.example.demo.service.UserAccountService;
