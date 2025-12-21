@@ -1,4 +1,5 @@
 package com.example.demo.entity;
+
 import com.example.demo.entity.enums.RoleType;
 import jakarta.persistence.*;
 
@@ -8,86 +9,88 @@ public class UserAccount {
 
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long oid;
+    private Long id;
 
     @Column(unique = true, nullable = false)
-    private String ousername;
+    private String username;
 
     @Column(unique = true, nullable = false)
-    private String oemail;
+    private String email;
 
     @Column(nullable = false)
-    private String opassword;
+    private String password;
 
     @Enumerated(EnumType.STRING)
-    private RoleType orole;
+    private RoleType role;
 
-    private Boolean oactive;
+    private Boolean active;
 
     
     public UserAccount() {
     }
 
+   
+    public UserAccount(Long id,
+                       String username,
+                       String email,
+                       String password,
+                       RoleType role,
+                       Boolean active) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.active = active;
+    }
+
     
-    public UserAccount(Long oid,
-                       String ousername,
-                       String oemail,
-                       String opassword,
-                       RoleType orole,
-                       Boolean oactive) {
-        this.oid = oid;
-        this.ousername = ousername;
-        this.oemail = oemail;
-        this.opassword = opassword;
-        this.orole = orole;
-        this.oactive = oactive;
+
+    public Long getId() {
+        return id;
     }
 
-    public Long getOid() {
-        return oid;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setOid(Long oid) {
-        this.oid = oid;
+    public String getUsername() {
+        return username;
     }
 
-    public String getOusername() {
-        return ousername;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public void setOusername(String ousername) {
-        this.ousername = ousername;
+    public String getEmail() {
+        return email;
     }
 
-    public String getOemail() {
-        return oemail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public void setOemail(String oemail) {
-        this.oemail = oemail;
+    public String getPassword() {
+        return password;
     }
 
-    public String getOpassword() {
-        return opassword;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public void setOpassword(String opassword) {
-        this.opassword = opassword;
+    public RoleType getRole() {
+        return role;
     }
 
-    public RoleType getOrole() {
-        return orole;
+    public void setRole(RoleType role) {
+        this.role = role;
     }
 
-    public void setOrole(RoleType orole) {
-        this.orole = orole;
+    public Boolean getActive() {
+        return active;
     }
 
-    public Boolean getOactive() {
-        return oactive;
-    }
-
-    public void setOactive(Boolean oactive) {
-        this.oactive = oactive;
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 }
