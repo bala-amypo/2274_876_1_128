@@ -21,37 +21,42 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    // ✅ JwtUtil bean (already correct)
     @Bean
     public JwtUtil jwtUtil() {
         return new JwtUtil(
                 "my-secret-key-for-jwt-123456",
-                3600000
+                3600000   
         );
     }
 
-    // ✅ NO FIELD INJECTION – method parameter use pannrom
     @Bean
-    public SecurityFilterChain filterChain(
+    public SecurityFilterChain securityFilterChain(
             HttpSecurity http,
             JwtAuthenticationFilter jwtAuthenticationFilter
     ) throws Exception {
 
         http
+         
             .csrf(csrf -> csrf.disable())
+
+          
             .sessionManagement(session ->
-                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            )
+
+          
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
-    "/auth/**",
-    "/swagger-ui/**",
-    "/v3/api-docs/**",
-    "/status"
-).permitAll()
-
+                    "/auth/**",
+                    "/swagger-ui/**",
+                    "/v3/api-docs/**",
+                    "/swagger-ui.html",
+                    "/status"
+                ).permitAll()
                 .anyRequest().authenticated()
             );
 
+       
         http.addFilterBefore(
                 jwtAuthenticationFilter,
                 UsernamePasswordAuthenticationFilter.class
