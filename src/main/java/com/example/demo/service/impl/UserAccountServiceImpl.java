@@ -29,19 +29,26 @@ public class UserAccountServiceImpl implements UserAccountService {
                 passwordEncoder.encode(userAccount.getPassword())
         );
 
-        // ✅ default role (PDF rule)
+     
         if (userAccount.getRole() == null) {
             userAccount.setRole(RoleType.INVESTOR);
         }
 
-        // ✅ default active
+      
         userAccount.setActive(true);
 
         return repository.save(userAccount);
     }
 
+    // @Override
+    // public Optional<UserAccount> findByEmail(String email) {
+    //     return repository.findByEmail(email);
+    // }
     @Override
-    public Optional<UserAccount> findByEmail(String email) {
-        return repository.findByEmail(email);
-    }
+public UserAccount findByEmail(String email) {
+    return repository.findByEmail(email)
+            .orElseThrow(() ->
+                    new RuntimeException("User not found"));
+}
+
 }
