@@ -1,50 +1,35 @@
-package com.example.demo.entity;
+package sbs.rosedev.springFirst.entity;
 
-import com.example.demo.entity.enums.RoleType;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
+import sbs.rosedev.springFirst.entity.enums.RoleType;
 
 @Entity
-//@Table(name = "user_accounts")
 public class UserAccount {
-
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
-
-    @Column(unique = true, nullable = false)
-    private String username;
-
-    @Column(unique = true, nullable = false)
+    @Column(unique=true)
+    private String userName;
+    @Column(unique=true)
+    @Email(message="Invalid email")
     private String email;
-
-    @Column(nullable = false)
     private String password;
-
-    @Enumerated(EnumType.STRING)
     private RoleType role;
+    private Boolean active = true;
 
-    private Boolean active;
-
-    
-    public UserAccount() {
-    }
-
-   
-    public UserAccount(Long id,
-                       String username,
-                       String email,
-                       String password,
-                       RoleType role,
-                       Boolean active) {
-        this.id = id;
-        this.username = username;
+    public UserAccount(Boolean active, String email, Long id, String password, RoleType role, String userName) {
+        this.active = active;
         this.email = email;
+        this.id = id;
         this.password = password;
         this.role = role;
-        this.active = active;
+        this.userName = userName;
     }
-
-    
 
     public Long getId() {
         return id;
@@ -54,12 +39,12 @@ public class UserAccount {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getEmail() {
@@ -93,4 +78,6 @@ public class UserAccount {
     public void setActive(Boolean active) {
         this.active = active;
     }
+
+
 }
