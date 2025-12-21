@@ -4,7 +4,7 @@ import com.example.demo.entity.enums.RoleType;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "user_accounts")
+//@Table(name = "user_accounts")
 public class UserAccount {
 
     @Id
