@@ -1,11 +1,13 @@
 package com.example.demo.service.impl;
-import com.example.demo.entity.enums.RoleType;
 
 import com.example.demo.entity.UserAccount;
+import com.example.demo.entity.enums.RoleType;
 import com.example.demo.repository.UserAccountRepository;
 import com.example.demo.service.UserAccountService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserAccountServiceImpl implements UserAccountService {
@@ -21,16 +23,25 @@ public class UserAccountServiceImpl implements UserAccountService {
 
     @Override
     public UserAccount register(UserAccount userAccount) {
-        userAccount.setOpassword(
-                passwordEncoder.encode(userAccount.getOpassword())
+
+       
+        userAccount.setPassword(
+                passwordEncoder.encode(userAccount.getPassword())
         );
-        userAccount.setOrole(RoleType.INVESTOR);
-        userAccount.setOactive(true);
+
+        // ✅ default role (PDF rule)
+        if (userAccount.getRole() == null) {
+            userAccount.setRole(RoleType.INVESTOR);
+        }
+
+        // ✅ default active
+        userAccount.setActive(true);
+
         return repository.save(userAccount);
     }
 
     @Override
-    public UserAccount findByEmail(String email) {
-        return repository.findByOemail(email).orElse(null);
+    public Optional<UserAccount> findByEmail(String email) {
+        return repository.findByEmail(email);
     }
 }
