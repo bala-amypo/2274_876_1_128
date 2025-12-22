@@ -8,15 +8,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.dto.AuthRequest;
 import com.example.demo.dto.AuthResponse;
 import com.example.demo.entity.UserAccount;
-import com.example.demo.service.AuthService;
+import com.example.demo.service.UserAccountService;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
 
-    private final AuthService authService;
+    private final UserAccountService authService;
 
-    public AuthController(AuthService authService) {
+    public AuthController(UserAccountService authService) {
         this.authService = authService;
     }
 
