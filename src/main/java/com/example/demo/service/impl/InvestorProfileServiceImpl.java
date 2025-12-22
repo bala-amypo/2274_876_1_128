@@ -43,7 +43,7 @@ public class InvestorProfileServiceImpl implements InvestorProfileService {
     public List<InvestorProfile> getAllInvestors() {
         return repository.findAll();
     }
-    
+     
     @Override
     public InvestorProfile updateInvestorStatus(Long id, boolean active) {
         InvestorProfile investor = getInvestorById(id);
