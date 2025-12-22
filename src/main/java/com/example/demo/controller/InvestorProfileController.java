@@ -35,7 +35,7 @@ public class InvestorProfileController {
         return service.getAllInvestors();
     }
 
-    // ✅ PUT – update ACTIVE STATUS (DTO இல்லாமல்)
+    
     @PutMapping("/{id}/status")
     public InvestorProfile updateInvestorStatus(
             @PathVariable Long id,
