@@ -31,7 +31,7 @@ public class AuthController {
         return new AuthResponse(
                 "dummy-token",
                 1L,
-                request.getUsername(),
+                "demo-user",
                 "Login success"
         );
     }
