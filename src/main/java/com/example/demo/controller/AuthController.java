@@ -14,21 +14,26 @@ import com.example.demo.service.UserAccountService;
 @RequestMapping("/auth")
 public class AuthController {
 
-    private final UserAccountService authService;
+    private final UserAccountService userAccountService;
 
-    public AuthController(UserAccountService authService) {
-        this.authService = authService;
+    public AuthController(UserAccountService userAccountService) {
+        this.userAccountService = userAccountService;
     }
 
+    // REGISTER
     @PostMapping("/register")
-    public UserAccount register(
-            @RequestBody UserAccount user) {
-        return authService.register(user);
+    public UserAccount register(@RequestBody UserAccount userAccount) {
+        return userAccountService.postUserDateToDB(userAccount);
     }
 
+    // LOGIN (DUMMY - build pass purpose)
     @PostMapping("/login")
-    public AuthResponse login(
-            @RequestBody AuthRequest request) {
-        return authService.login(request);
+    public AuthResponse login(@RequestBody AuthRequest request) {
+
+        AuthResponse response = new AuthResponse();
+        response.setToken("login-success");
+        response.setMessage("Login API working (dummy)");
+
+        return response;
     }
 }
