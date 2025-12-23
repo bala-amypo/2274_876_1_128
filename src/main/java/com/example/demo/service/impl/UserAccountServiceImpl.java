@@ -30,28 +30,20 @@ public class UserAccountServiceImpl implements UserAccountService {
         this.jwtUtil = jwtUtil;
     }
 
-    // ---------------- REGISTER ----------------
     @Override
     public UserAccount register(RegisterRequest request) {
-
-        // Use 4-param constructor and set active via setter
         UserAccount user = new UserAccount(
                 request.getUsername(),
                 request.getEmail(),
                 passwordEncoder.encode(request.getPassword()),
-                RoleType.INVESTOR       // default role
+                RoleType.INVESTOR
         );
-
-        // Set active to true by default
         user.setActive(true);
-
         return userAccountRepository.save(user);
     }
 
-    // ---------------- LOGIN ----------------
     @Override
     public AuthResponse login(AuthRequest request) {
-
         UserAccount user = userAccountRepository
                 .findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("Invalid email"));
@@ -62,15 +54,9 @@ public class UserAccountServiceImpl implements UserAccountService {
 
         String token = jwtUtil.generateToken(user);
 
-        return new AuthResponse(
-                token,
-                user.getId(),
-                user.getEmail(),
-                user.getRole().name()
-        );
+        return new AuthResponse(token, user.getId(), user.getEmail(), user.getRole().name());
     }
 
-    // ---------------- BASIC CRUD ----------------
     @Override
     public Optional<UserAccount> getUserDataFromDB(Long id) {
         return userAccountRepository.findById(id);
@@ -88,7 +74,9 @@ public class UserAccountServiceImpl implements UserAccountService {
             existing.setActive(userAccount.getActive());
             existing.setRole(userAccount.getRole());
             existing.setUserName(userAccount.getUserName());
-            existing.setPassword(userAccount.getPassword() != null ? passwordEncoder.encode(userAccount.getPassword()) : existing.getPassword());
+            if (userAccount.getPassword() != null) {
+                existing.setPassword(passwordEncoder.encode(userAccount.getPassword()));
+            }
             return userAccountRepository.save(existing);
         });
     }
