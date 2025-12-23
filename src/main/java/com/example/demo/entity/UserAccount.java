@@ -26,6 +26,15 @@ public class UserAccount {
     private String password;
 
     private RoleType role;
+    public UserAccount(
+    Boolean active,
+    String email,
+    Long id,
+    String password,
+    RoleType role,
+    String username
+)
+
 
     private Boolean active = true;
 
