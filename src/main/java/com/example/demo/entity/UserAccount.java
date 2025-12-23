@@ -1,8 +1,8 @@
 package com.example.demo.entity;
 
-import com.example.demo.entity.enums.RoleType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import com.example.demo.entity.enums.RoleType;
 
 @Entity
 public class UserAccount {
@@ -11,14 +11,13 @@ public class UserAccount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String userName;
 
-    @Column(unique = true, nullable = false)
-    @Email(message = "Invalid email")
+    @Column(unique = true)
+    @Email
     private String email;
 
-    @Column(nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -26,83 +25,29 @@ public class UserAccount {
 
     private Boolean active = true;
 
-   
+    // ✅ REQUIRED by JPA
     public UserAccount() {
     }
 
-    
-    public UserAccount(
-            Boolean active,
-            String email,
-            Long id,
-            String password,
-            RoleType role,
-            String userName) {
-
-        this.active = active;
+    // optional constructor
+    public UserAccount(String userName, String email, String password, RoleType role) {
+        this.userName = userName;
         this.email = email;
-        this.id = id;
         this.password = password;
         this.role = role;
-        this.userName = userName;
+        this.active = true;
     }
 
-    
+    public Long getId() { return id; }
+    public String getUserName() { return userName; }
+    public String getEmail() { return email; }
+    public String getPassword() { return password; }
+    public RoleType getRole() { return role; }
+    public Boolean getActive() { return active; }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    
-    public String getUsername() {
-        return userName;
-    }
-
-    public void setUsername(String username) {
-        this.userName = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public RoleType getRole() {
-        return role;
-    }
-
-    public void setRole(RoleType role) {
-        this.role = role;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
+    public void setUserName(String userName) { this.userName = userName; }
+    public void setEmail(String email) { this.email = email; }
+    public void setPassword(String password) { this.password = password; }
+    public void setRole(RoleType role) { this.role = role; }
+    public void setActive(Boolean active) { this.active = active; }
 }
