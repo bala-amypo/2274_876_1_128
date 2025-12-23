@@ -22,13 +22,16 @@ public class SecurityConfig {
 
         http
             .csrf(csrf -> csrf.disable())
-            .formLogin(form -> form.disable())     // 🔴 removes login page
+            .formLogin(form -> form.disable())
             .httpBasic(basic -> basic.disable())
             .authorizeHttpRequests(auth -> auth
+                // ✅ allow root & swagger
                 .requestMatchers(
+                    "/",
+                    "/index.html",
                     "/swagger-ui/**",
-                    "/v3/api-docs/**",
                     "/swagger-ui.html",
+                    "/v3/api-docs/**",
                     "/auth/**"
                 ).permitAll()
                 .anyRequest().authenticated()
