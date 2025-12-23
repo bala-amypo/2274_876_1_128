@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.AuthRequest;
 import com.example.demo.dto.AuthResponse;
+import com.example.demo.dto.RegisterRequest;
 import com.example.demo.entity.UserAccount;
 import com.example.demo.service.UserAccountService;
 
@@ -20,19 +21,15 @@ public class AuthController {
         this.userAccountService = userAccountService;
     }
 
+   
     @PostMapping("/register")
-    public UserAccount register(@RequestBody UserAccount userAccount) {
-        return userAccountService.postUserDateToDB(userAccount);
+    public UserAccount register(@RequestBody RegisterRequest request) {
+        return userAccountService.register(request);
     }
 
+ 
     @PostMapping("/login")
     public AuthResponse login(@RequestBody AuthRequest request) {
-
-        return new AuthResponse(
-                "dummy-token",
-                1L,
-                "demo-user",
-                "Login success"
-        );
+        return userAccountService.login(request);
     }
 }
