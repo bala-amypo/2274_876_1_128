@@ -1,13 +1,8 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.Email;
-
 import com.example.demo.entity.enums.RoleType;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 
 @Entity
 public class UserAccount {
@@ -16,30 +11,34 @@ public class UserAccount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String userName;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     @Email(message = "Invalid email")
     private String email;
 
+    @Column(nullable = false)
     private String password;
 
+    @Enumerated(EnumType.STRING)
     private RoleType role;
-    public UserAccount(
-    Boolean active,
-    String email,
-    Long id,
-    String password,
-    RoleType role,
-    String username
-)
-
 
     private Boolean active = true;
 
-    public UserAccount(Boolean active, String email, Long id,
-                       String password, RoleType role, String userName) {
+   
+    public UserAccount() {
+    }
+
+    
+    public UserAccount(
+            Boolean active,
+            String email,
+            Long id,
+            String password,
+            RoleType role,
+            String userName) {
+
         this.active = active;
         this.email = email;
         this.id = id;
@@ -47,6 +46,8 @@ public class UserAccount {
         this.role = role;
         this.userName = userName;
     }
+
+    
 
     public Long getId() {
         return id;
@@ -62,6 +63,15 @@ public class UserAccount {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    // ✅ IMPORTANT: alias for getUsername() (JWT / Auth expects this)
+    public String getUsername() {
+        return userName;
+    }
+
+    public void setUsername(String username) {
+        this.userName = username;
     }
 
     public String getEmail() {
