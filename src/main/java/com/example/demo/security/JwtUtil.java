@@ -8,7 +8,6 @@ import com.example.demo.entity.UserAccount;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 
 import javax.crypto.SecretKey;
@@ -16,16 +15,14 @@ import javax.crypto.SecretKey;
 @Component
 public class JwtUtil {
 
-    // 🔐 Hardcoded secret (min 32 chars)
     private static final String SECRET =
             "MyJwtSecretKeyMyJwtSecretKey123456";
 
-    private static final long EXPIRATION = 3600000; // 1 hour
+    private static final long EXPIRATION = 3600000;
 
     private final SecretKey secretKey =
             Keys.hmacShaKeyFor(SECRET.getBytes());
 
-    // ✅ Generate token
     public String generateToken(UserAccount user) {
 
         Date now = new Date();
@@ -33,15 +30,20 @@ public class JwtUtil {
 
         return Jwts.builder()
                 .setSubject(user.getEmail())
+                .claim("userId", user.getId())
                 .claim("role", user.getRole().name())
                 .setIssuedAt(now)
                 .setExpiration(expiry)
-                .signWith(secretKey, SignatureAlgorithm.HS256)
+                .signWith(secretKey)
                 .compact();
     }
 
     public String extractEmail(String token) {
         return getClaims(token).getSubject();
+    }
+
+    public Long extractUserId(String token) {
+        return getClaims(token).get("userId", Long.class);
     }
 
     public boolean validateToken(String token) {
