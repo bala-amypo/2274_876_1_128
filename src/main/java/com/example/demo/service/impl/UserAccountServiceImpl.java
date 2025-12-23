@@ -2,41 +2,107 @@ package com.example.demo.service.impl;
 
 import java.util.Optional;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.dto.AuthRequest;
+import com.example.demo.dto.AuthResponse;
+import com.example.demo.dto.RegisterRequest;
 import com.example.demo.entity.UserAccount;
+import com.example.demo.entity.enums.RoleType;
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.UserAccountRepository;
+import com.example.demo.security.JwtUtil;
 import com.example.demo.service.UserAccountService;
 
 @Service
 public class UserAccountServiceImpl implements UserAccountService {
 
-    private final UserAccountRepository userAccountRepository;
+    private final UserAccountRepository userRepo;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
-    public UserAccountServiceImpl(UserAccountRepository userAccountRepository) {
-        this.userAccountRepository = userAccountRepository;
+    public UserAccountServiceImpl(
+            UserAccountRepository userRepo,
+            PasswordEncoder passwordEncoder,
+            JwtUtil jwtUtil) {
+        this.userRepo = userRepo;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtUtil = jwtUtil;
+    }
+
+    // ---------- AUTH ----------
+
+    @Override
+    public UserAccount register(RegisterRequest request) {
+
+        UserAccount user = new UserAccount();
+        user.setUsername(request.getUsername());
+        user.setEmail(request.getEmail());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setRole(
+                request.getRole() != null
+                        ? request.getRole()
+                        : RoleType.INVESTOR
+        );
+        user.setActive(true);
+
+        return userRepo.save(user);
     }
 
     @Override
+    public AuthResponse login(AuthRequest request) {
+
+        UserAccount user = userRepo.findByEmail(request.getEmail())
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("User not found"));
+
+        if (!passwordEncoder.matches(
+                request.getPassword(),
+                user.getPassword())) {
+            throw new IllegalArgumentException("Invalid credentials");
+        }
+
+        String token = jwtUtil.generateToken(
+                user.getId(),
+                user.getEmail(),
+                user.getRole().name()
+        );
+
+        return new AuthResponse(
+                token,
+                user.getId(),
+                user.getEmail(),
+                user.getRole().name()
+        );
+    }
+
+    // ---------- EXISTING CRUD ----------
+
+    @Override
     public Optional<UserAccount> getUserDataFromDB(Long id) {
-        return userAccountRepository.findById(id);
+        return userRepo.findById(id);
     }
 
     @Override
     public UserAccount postUserDateToDB(UserAccount userAccount) {
-        return userAccountRepository.saveAndFlush(userAccount);
+        return userRepo.save(userAccount);
     }
 
     @Override
     public Optional<UserAccount> updateUserDataInDB(Long id, UserAccount userAccount) {
-        userAccountRepository.deleteById(id);
-        userAccountRepository.saveAndFlush(userAccount);
-        return userAccountRepository.findById(id);
+        return userRepo.findById(id)
+                .map(existing -> {
+                    existing.setUsername(userAccount.getUsername());
+                    existing.setEmail(userAccount.getEmail());
+                    existing.setActive(userAccount.getActive());
+                    return userRepo.save(existing);
+                });
     }
 
     @Override
     public String deleteUserDataInDB(Long id) {
-        userAccountRepository.deleteById(id);
+        userRepo.deleteById(id);
         return "Deleted Successfully";
     }
 }
