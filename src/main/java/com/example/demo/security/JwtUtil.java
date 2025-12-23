@@ -1,30 +1,22 @@
 package com.example.demo.security;
 
 import java.util.Date;
-
+import javax.crypto.SecretKey;
 import org.springframework.stereotype.Component;
-
 import com.example.demo.entity.UserAccount;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
-import javax.crypto.SecretKey;
-
 @Component
 public class JwtUtil {
 
-    private static final String SECRET =
-            "MyJwtSecretKeyMyJwtSecretKey123456";
-
+    private static final String SECRET = "MyJwtSecretKeyMyJwtSecretKey123456";
     private static final long EXPIRATION = 3600000;
 
-    private final SecretKey secretKey =
-            Keys.hmacShaKeyFor(SECRET.getBytes());
+    private final SecretKey secretKey = Keys.hmacShaKeyFor(SECRET.getBytes());
 
     public String generateToken(UserAccount user) {
-
         Date now = new Date();
         Date expiry = new Date(now.getTime() + EXPIRATION);
 
