@@ -20,20 +20,19 @@ public class AuthController {
         this.userAccountService = userAccountService;
     }
 
-    // REGISTER
     @PostMapping("/register")
     public UserAccount register(@RequestBody UserAccount userAccount) {
         return userAccountService.postUserDateToDB(userAccount);
     }
 
-    // LOGIN (DUMMY - build pass purpose)
     @PostMapping("/login")
     public AuthResponse login(@RequestBody AuthRequest request) {
 
-        AuthResponse response = new AuthResponse();
-        response.setToken("login-success");
-        response.setMessage("Login API working (dummy)");
-
-        return response;
+        return new AuthResponse(
+                "dummy-token",
+                1L,
+                request.getUsername(),
+                "Login success"
+        );
     }
 }
