@@ -2,8 +2,8 @@ package com.example.demo.service.impl;
 
 import java.util.Optional;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.example.demo.dto.AuthRequest;
 import com.example.demo.dto.AuthResponse;
@@ -31,21 +31,25 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     // ---------------- REGISTER ----------------
+    @Override
     public UserAccount register(RegisterRequest request) {
 
+        // Use 4-param constructor and set active via setter
         UserAccount user = new UserAccount(
-                true,                                   // active
-                request.getEmail(),                     // email
-                null,                                   // id (auto generated)
+                request.getUsername(),
+                request.getEmail(),
                 passwordEncoder.encode(request.getPassword()),
-                RoleType.INVESTOR,                          // default role
-                request.getUsername()                   // username
+                RoleType.INVESTOR       // default role
         );
+
+        // Set active to true by default
+        user.setActive(true);
 
         return userAccountRepository.save(user);
     }
 
     // ---------------- LOGIN ----------------
+    @Override
     public AuthResponse login(AuthRequest request) {
 
         UserAccount user = userAccountRepository
@@ -83,6 +87,8 @@ public class UserAccountServiceImpl implements UserAccountService {
             existing.setEmail(userAccount.getEmail());
             existing.setActive(userAccount.getActive());
             existing.setRole(userAccount.getRole());
+            existing.setUserName(userAccount.getUserName());
+            existing.setPassword(userAccount.getPassword() != null ? passwordEncoder.encode(userAccount.getPassword()) : existing.getPassword());
             return userAccountRepository.save(existing);
         });
     }
