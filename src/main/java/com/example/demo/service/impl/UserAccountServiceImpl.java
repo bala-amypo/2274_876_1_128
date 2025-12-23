@@ -38,7 +38,7 @@ public class UserAccountServiceImpl implements UserAccountService {
                 request.getEmail(),                     // email
                 null,                                   // id (auto generated)
                 passwordEncoder.encode(request.getPassword()),
-                RoleType.USER,                          // default role
+                RoleType.INVESTOR,                          // default role
                 request.getUsername()                   // username
         );
 
