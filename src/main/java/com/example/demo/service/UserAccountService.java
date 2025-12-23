@@ -9,7 +9,7 @@ import com.example.demo.entity.UserAccount;
 
 public interface UserAccountService {
 
-    // existing
+    
     Optional<UserAccount> getUserDataFromDB(Long id);
 
     UserAccount postUserDateToDB(UserAccount userAccount);
@@ -18,7 +18,6 @@ public interface UserAccountService {
 
     String deleteUserDataInDB(Long id);
 
-    // ✅ AUTH (MANDATORY)
     UserAccount register(RegisterRequest request);
 
     AuthResponse login(AuthRequest request);
