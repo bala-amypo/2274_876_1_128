@@ -31,24 +31,23 @@ public class UserAccountServiceImpl implements UserAccountService {
         this.jwtUtil = jwtUtil;
     }
 
-    // ---------- AUTH ----------
+    
 
     @Override
-    public UserAccount register(RegisterRequest request) {
+public UserAccount register(RegisterRequest request) {
 
-        UserAccount user = new UserAccount();
-        user.setUsername(request.getUsername());
-        user.setEmail(request.getEmail());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setRole(
-                request.getRole() != null
-                        ? request.getRole()
-                        : RoleType.INVESTOR
-        );
-        user.setActive(true);
+    UserAccount user = new UserAccount(
+            true,                       // active
+            request.getEmail(),         // email
+            null,                       // id (auto)
+            passwordEncoder.encode(request.getPassword()),
+            request.getRole(),          // role
+            request.getUsername()       // username
+    );
 
-        return userRepo.save(user);
-    }
+    return userRepo.save(user);
+}
+
 
     @Override
     public AuthResponse login(AuthRequest request) {
@@ -77,7 +76,7 @@ public class UserAccountServiceImpl implements UserAccountService {
         );
     }
 
-    // ---------- EXISTING CRUD ----------
+    
 
     @Override
     public Optional<UserAccount> getUserDataFromDB(Long id) {
