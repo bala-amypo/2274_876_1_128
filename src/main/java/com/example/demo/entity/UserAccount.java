@@ -65,7 +65,7 @@ public class UserAccount {
         this.userName = userName;
     }
 
-    // ✅ IMPORTANT: alias for getUsername() (JWT / Auth expects this)
+    
     public String getUsername() {
         return userName;
     }
