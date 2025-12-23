@@ -2,48 +2,62 @@ package com.example.demo.security;
 
 import java.util.Date;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.Claims;
+import org.springframework.stereotype.Component;
 
 import com.example.demo.entity.UserAccount;
-import com.example.demo.entity.enums.RoleType;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+
+import javax.crypto.SecretKey;
+
+@Component
 public class JwtUtil {
 
-    private final String secret;
-    private final long validityInMs;
+    // 🔐 Hardcoded secret (min 32 chars)
+    private static final String SECRET =
+            "MyJwtSecretKeyMyJwtSecretKey123456";
 
-    public JwtUtil(String secret, long validityInMs) {
-        this.secret = secret;
-        this.validityInMs = validityInMs;
-    }
+    private static final long EXPIRATION = 3600000; // 1 hour
 
+    private final SecretKey secretKey =
+            Keys.hmacShaKeyFor(SECRET.getBytes());
+
+    // ✅ Generate token
     public String generateToken(UserAccount user) {
+
         Date now = new Date();
-        Date expiry = new Date(now.getTime() + validityInMs);
+        Date expiry = new Date(now.getTime() + EXPIRATION);
 
         return Jwts.builder()
                 .setSubject(user.getEmail())
                 .claim("role", user.getRole().name())
                 .setIssuedAt(now)
                 .setExpiration(expiry)
-                .signWith(SignatureAlgorithm.HS256, secret)
+                .signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
     }
 
     public String extractEmail(String token) {
-        return Jwts.parser()
-                .setSigningKey(secret)
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
+        return getClaims(token).getSubject();
     }
 
     public boolean validateToken(String token) {
-        Jwts.parser()
-                .setSigningKey(secret)
-                .parseClaimsJws(token);
-        return true;
+        try {
+            getClaims(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private Claims getClaims(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
 }
