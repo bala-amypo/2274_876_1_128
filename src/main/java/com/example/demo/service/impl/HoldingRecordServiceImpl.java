@@ -119,6 +119,61 @@
 //     }
 // }
 
+// package com.example.demo.service.impl;
+
+// import org.springframework.stereotype.Service;
+// import java.util.List;
+
+// import com.example.demo.entity.HoldingRecord;
+// import com.example.demo.entity.enums.AssetClassType;
+// import com.example.demo.repository.HoldingRecordRepository;
+// import com.example.demo.service.HoldingRecordService;
+
+// @Service
+// public class HoldingRecordServiceImpl
+//         implements HoldingRecordService {
+
+//     private final HoldingRecordRepository holdingRecordRepository;
+
+//     public HoldingRecordServiceImpl(HoldingRecordRepository holdingRecordRepository) {
+//         this.holdingRecordRepository = holdingRecordRepository;
+//     }
+
+//     // ✅ INTERFACE METHOD 1 (NAME FIXED)
+//     @Override
+//     public HoldingRecord saveHolding(HoldingRecord record) {
+
+//         if (record.getValue() == null || record.getValue() <= 0) {
+//             throw new IllegalArgumentException(
+//                     "Holding value must be greater than zero");
+//         }
+
+//         return holdingRecordRepository.save(record);
+//     }
+
+//     // ✅ INTERFACE METHOD 2
+//     @Override
+//     public List<HoldingRecord> getHoldingsByInvestor(Long investorId) {
+//         return holdingRecordRepository.findByInvestorId(investorId);
+//     }
+
+//     // ✅ INTERFACE METHOD 3
+//     @Override
+//     public List<HoldingRecord> getHoldingsAboveValue(Double value) {
+//         return holdingRecordRepository.findByValueGreaterThan(value);
+//     }
+
+//     // ✅ INTERFACE METHOD 4
+//     @Override
+//     public List<HoldingRecord> getHoldingsByInvestorAndAsset(
+//             Long investorId,
+//             AssetClassType assetClass) {
+
+//         return holdingRecordRepository
+//                 .findByInvestorAndAssetClass(investorId, assetClass);
+//     }
+// }
+
 package com.example.demo.service.impl;
 
 import org.springframework.stereotype.Service;
@@ -139,7 +194,6 @@ public class HoldingRecordServiceImpl
         this.holdingRecordRepository = holdingRecordRepository;
     }
 
-    // ✅ INTERFACE METHOD 1 (NAME FIXED)
     @Override
     public HoldingRecord saveHolding(HoldingRecord record) {
 
@@ -151,25 +205,24 @@ public class HoldingRecordServiceImpl
         return holdingRecordRepository.save(record);
     }
 
-    // ✅ INTERFACE METHOD 2
     @Override
     public List<HoldingRecord> getHoldingsByInvestor(Long investorId) {
         return holdingRecordRepository.findByInvestorId(investorId);
     }
 
-    // ✅ INTERFACE METHOD 3
     @Override
     public List<HoldingRecord> getHoldingsAboveValue(Double value) {
         return holdingRecordRepository.findByValueGreaterThan(value);
     }
 
-    // ✅ INTERFACE METHOD 4
+    // 🔥 FINAL FIX HERE
     @Override
     public List<HoldingRecord> getHoldingsByInvestorAndAsset(
             Long investorId,
             AssetClassType assetClass) {
 
         return holdingRecordRepository
-                .findByInvestorAndAssetClass(investorId, assetClass);
+                .findByInvestorIdAndAssetClass(investorId, assetClass);
     }
 }
+
