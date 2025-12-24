@@ -41,7 +41,7 @@ public class SwaggerConfig {
         return new OpenAPI()
                 // Server URL
                 .servers(List.of(
-                        new Server().url("https://9164.32procr.amypo.ai")
+                        new Server().url("https://9164.32procr.amypo.ai/")
                 ))
                 // 🔐 Security requirement (THIS enables Authorize button)
                 .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
