@@ -237,56 +237,55 @@
 package com.example.demo.service.impl;
 
 import org.springframework.stereotype.Service;
-
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.example.demo.entity.AllocationSnapshotRecord;
 import com.example.demo.entity.HoldingRecord;
+import com.example.demo.repository.AllocationSnapshotRecordRepository;
 import com.example.demo.repository.HoldingRecordRepository;
 
 @Service
 public class AllocationSnapshotServiceImpl {
 
-    private final HoldingRecordRepository holdingRecordRepository;
+    private final HoldingRecordRepository holdingRepo;
+    private final AllocationSnapshotRecordRepository snapshotRepo;
 
-    public AllocationSnapshotServiceImpl(HoldingRecordRepository holdingRecordRepository) {
-        this.holdingRecordRepository = holdingRecordRepository;
+    public AllocationSnapshotServiceImpl(
+            HoldingRecordRepository holdingRepo,
+            AllocationSnapshotRecordRepository snapshotRepo) {
+        this.holdingRepo = holdingRepo;
+        this.snapshotRepo = snapshotRepo;
     }
 
-    /**
-     * 🔥 TEST EXPECTS THIS
-     * Compute allocation snapshot for an investor
-     */
-    public Map<String, Double> computeSnapshot(long investorId) {
+    // 🔥 TEST EXPECTS THIS RETURN TYPE
+    public AllocationSnapshotRecord computeSnapshot(long investorId) {
 
         List<HoldingRecord> holdings =
-                holdingRecordRepository.findByInvestorId(investorId);
+                holdingRepo.findByInvestorId(investorId);
 
-        if (holdings == null || holdings.isEmpty()) {
-            return new HashMap<>();
-        }
+        Map<String, Double> snapshotMap =
+                holdings.stream()
+                        .collect(Collectors.groupingBy(
+                                h -> h.getAssetClass().name(),
+                                Collectors.summingDouble(HoldingRecord::getValue)
+                        ));
 
-        // group by asset class and sum values
-        return holdings.stream()
-                .collect(Collectors.groupingBy(
-                        h -> h.getAssetClass().name(),
-                        Collectors.summingDouble(HoldingRecord::getValue)
-                ));
+        AllocationSnapshotRecord record =
+                new AllocationSnapshotRecord(
+                        investorId,
+                        snapshotMap.toString()
+                );
+
+        return snapshotRepo.save(record);
     }
 
-    /**
-     * 🔥 TEST EXPECTS THIS
-     * Return all snapshots (dummy implementation)
-     */
-    public List<Map<String, Double>> getAllSnapshots() {
-        return new ArrayList<>();
+    public AllocationSnapshotRecord getSnapshotById(long id) {
+        return snapshotRepo.findById(id).orElse(null);
     }
 
-    /**
-     * 🔥 TEST EXPECTS THIS
-     * Get snapshot by id (dummy implementation)
-     */
-    public Map<String, Double> getSnapshotById(long id) {
-        return new HashMap<>();
+    public List<AllocationSnapshotRecord> getAllSnapshots() {
+        return snapshotRepo.findAll();
     }
 }
