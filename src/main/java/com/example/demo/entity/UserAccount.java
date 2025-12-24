@@ -45,7 +45,10 @@ public class UserAccount {
     public String getPassword() { return password; }
     public RoleType getRole() { return role; }
     public Boolean getActive() { return active; }
-
+    
+    public void setId(Long id) {
+        this.id = id;
+    }
     public void setUserName(String userName) { this.userName = userName; }
     public void setEmail(String email) { this.email = email; }
     public void setPassword(String password) { this.password = password; }
