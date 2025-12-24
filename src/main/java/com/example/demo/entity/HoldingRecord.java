@@ -224,6 +224,15 @@ public class HoldingRecord {
         this.currentValue = currentValue;
     }
 
+    // 🔥🔥🔥 SERVICE EXPECTS THESE METHODS
+    public Double getValue() {
+        return this.currentValue;
+    }
+
+    public void setValue(Double value) {
+        this.currentValue = value;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -232,9 +241,3 @@ public class HoldingRecord {
         this.createdAt = createdAt;
     }
 }
-
-
-
-
-
-
