@@ -628,10 +628,10 @@ public class HoldingRecordServiceImpl implements HoldingRecordService {
     @Override
     public HoldingRecord saveHolding(HoldingRecord record) {
 
-        if (record.getValue() == null || record.getValue() <= 0) {
-            throw new IllegalArgumentException(
-                    "Holding value must be greater than zero");
-        }
+       if (record.getValue() == null || record.getValue() <= 0) {
+    throw new IllegalArgumentException("Invalid holding value");
+}
+
         return repo.save(record);
     }
 
