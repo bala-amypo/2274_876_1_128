@@ -62,9 +62,13 @@ import com.example.demo.entity.HoldingRecord;
 
 public interface HoldingRecordRepository extends JpaRepository<HoldingRecord, Long> {
 
-    // 🔥 test expects old name
+    // 🔥 AllocationSnapshotServiceImpl EXPECTS THIS
+    List<HoldingRecord> findByInvestorId(Long investorId);
+
+    // 🔥 Tests EXPECT THIS
     List<HoldingRecord> findByValueGreaterThan(Double value);
 
-    // optional (safe)
+    // optional (safe – if currentValue field used)
     List<HoldingRecord> findByCurrentValueGreaterThan(Double value);
 }
+
