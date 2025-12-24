@@ -167,9 +167,42 @@
 //     Optional<HoldingRecord> findById(Long id);
 // }
 
+// package com.example.demo.repository;
+
+// import org.springframework.data.jpa.repository.JpaRepository;
+// import java.util.List;
+// import java.util.Optional;
+
+// import com.example.demo.entity.HoldingRecord;
+// import com.example.demo.entity.enums.AssetClassType;
+
+// public interface HoldingRecordRepository
+//         extends JpaRepository<HoldingRecord, Long> {
+
+//     // Swagger + Service
+//     List<HoldingRecord> findByInvestorId(Long investorId);
+
+//     // Swagger naming
+//     List<HoldingRecord> findByInvestorIdAndAssetClass(
+//             Long investorId,
+//             AssetClassType assetClass);
+
+//     // 🔥 TEST EXPECTS THIS NAME
+//     List<HoldingRecord> findByInvestorAndAssetClass(
+//             Long investorId,
+//             AssetClassType assetClass);
+
+//     // Used by tests
+//     List<HoldingRecord> findByValueGreaterThan(Double value);
+
+//     Optional<HoldingRecord> findById(Long id);
+// }
+
 package com.example.demo.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
@@ -179,21 +212,23 @@ import com.example.demo.entity.enums.AssetClassType;
 public interface HoldingRecordRepository
         extends JpaRepository<HoldingRecord, Long> {
 
-    // Swagger + Service
+    // Swagger + service
     List<HoldingRecord> findByInvestorId(Long investorId);
 
-    // Swagger naming
+    // Swagger naming (correct)
     List<HoldingRecord> findByInvestorIdAndAssetClass(
-            Long investorId,
-            AssetClassType assetClass);
+            Long investorId, AssetClassType assetClass);
 
-    // 🔥 TEST EXPECTS THIS NAME
+    // 🔥 TEST EXPECTED NAME – FIXED USING @Query
+    @Query("SELECT h FROM HoldingRecord h " +
+           "WHERE h.investorId = :investorId AND h.assetClass = :assetClass")
     List<HoldingRecord> findByInvestorAndAssetClass(
-            Long investorId,
-            AssetClassType assetClass);
+            @Param("investorId") Long investorId,
+            @Param("assetClass") AssetClassType assetClass);
 
-    // Used by tests
+    // Test
     List<HoldingRecord> findByValueGreaterThan(Double value);
 
     Optional<HoldingRecord> findById(Long id);
 }
+
