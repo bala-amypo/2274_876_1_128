@@ -168,8 +168,8 @@ public class HoldingRecord {
     @Enumerated(EnumType.STRING)
     private AssetClassType assetClass;
 
-    // test expects this
-    private Double currentValue;
+    // 🔥 TEST EXPECTS FIELD NAME = value
+    private Double value;
 
     private LocalDateTime createdAt;
 
@@ -177,14 +177,13 @@ public class HoldingRecord {
         this.createdAt = LocalDateTime.now();
     }
 
-    // 🔥 TEST EXPECTED CONSTRUCTOR
     public HoldingRecord(Long investorId,
                          AssetClassType assetClass,
-                         Double currentValue,
+                         Double value,
                          LocalDateTime createdAt) {
         this.investorId = investorId;
         this.assetClass = assetClass;
-        this.currentValue = currentValue;
+        this.value = value;
         this.createdAt = createdAt;
     }
 
@@ -195,12 +194,11 @@ public class HoldingRecord {
 
     public AssetClassType getAssetClass() { return assetClass; }
 
-    // test uses this
-    public Double getCurrentValue() { return currentValue; }
+    // 🔥 REQUIRED BY TEST + STREAM
+    public Double getValue() { return value; }
+    public void setValue(Double value) { this.value = value; }
 
-    // service / stream uses this
-    public Double getValue() { return currentValue; }
     public boolean isEmpty() {
-        return currentValue == null || currentValue.doubleValue() == 0.0;
+        return value == null || value == 0.0;
     }
 }
