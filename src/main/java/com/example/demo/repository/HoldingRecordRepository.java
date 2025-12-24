@@ -166,3 +166,34 @@
 //     // JpaRepository already has this, but test expects it explicitly
 //     Optional<HoldingRecord> findById(Long id);
 // }
+
+package com.example.demo.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
+import java.util.Optional;
+
+import com.example.demo.entity.HoldingRecord;
+import com.example.demo.entity.enums.AssetClassType;
+
+public interface HoldingRecordRepository
+        extends JpaRepository<HoldingRecord, Long> {
+
+    // Swagger + Service
+    List<HoldingRecord> findByInvestorId(Long investorId);
+
+    // Swagger naming
+    List<HoldingRecord> findByInvestorIdAndAssetClass(
+            Long investorId,
+            AssetClassType assetClass);
+
+    // 🔥 TEST EXPECTS THIS NAME
+    List<HoldingRecord> findByInvestorAndAssetClass(
+            Long investorId,
+            AssetClassType assetClass);
+
+    // Used by tests
+    List<HoldingRecord> findByValueGreaterThan(Double value);
+
+    Optional<HoldingRecord> findById(Long id);
+}

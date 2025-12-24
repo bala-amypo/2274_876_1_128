@@ -420,6 +420,67 @@
 //     }
 // }
 
+// package com.example.demo.service.impl;
+
+// import org.springframework.stereotype.Service;
+// import java.util.List;
+
+// import com.example.demo.entity.HoldingRecord;
+// import com.example.demo.entity.enums.AssetClassType;
+// import com.example.demo.repository.HoldingRecordRepository;
+// import com.example.demo.service.HoldingRecordService;
+
+// @Service
+// public class HoldingRecordServiceImpl implements HoldingRecordService {
+
+//     private final HoldingRecordRepository repo;
+
+//     public HoldingRecordServiceImpl(HoldingRecordRepository repo) {
+//         this.repo = repo;
+//     }
+
+//     // ===== Swagger / Interface =====
+//     @Override
+//     public HoldingRecord saveHolding(HoldingRecord record) {
+//         if (record.getValue() == null || record.getValue() <= 0) {
+//             throw new IllegalArgumentException(
+//                     "Holding value must be greater than zero");
+//         }
+//         return repo.save(record);
+//     }
+
+//     @Override
+//     public List<HoldingRecord> getHoldingsByInvestor(Long investorId) {
+//         return repo.findByInvestorId(investorId);
+//     }
+
+//     @Override
+//     public List<HoldingRecord> getHoldingsAboveValue(Double value) {
+//         return repo.findByValueGreaterThan(value);
+//     }
+
+//     @Override
+//     public List<HoldingRecord> getHoldingsByInvestorAndAsset(
+//             Long investorId,
+//             AssetClassType assetClass) {
+
+//         return repo.findByInvestorIdAndAssetClass(investorId, assetClass);
+//     }
+
+//     // ===== TEST-ONLY ALIAS METHODS =====
+
+//     // test expects this name
+//     public HoldingRecord recordHolding(HoldingRecord record) {
+//         return saveHolding(record);
+//     }
+
+//     // test expects primitive long
+//     public HoldingRecord getHoldingById(long id) {
+//         return repo.findById(id).orElse(null);
+//     }
+// }
+
+
 package com.example.demo.service.impl;
 
 import org.springframework.stereotype.Service;
@@ -442,6 +503,7 @@ public class HoldingRecordServiceImpl implements HoldingRecordService {
     // ===== Swagger / Interface =====
     @Override
     public HoldingRecord saveHolding(HoldingRecord record) {
+
         if (record.getValue() == null || record.getValue() <= 0) {
             throw new IllegalArgumentException(
                     "Holding value must be greater than zero");
@@ -463,18 +525,14 @@ public class HoldingRecordServiceImpl implements HoldingRecordService {
     public List<HoldingRecord> getHoldingsByInvestorAndAsset(
             Long investorId,
             AssetClassType assetClass) {
-
         return repo.findByInvestorIdAndAssetClass(investorId, assetClass);
     }
 
-    // ===== TEST-ONLY ALIAS METHODS =====
-
-    // test expects this name
+    // ===== TEST ALIAS METHODS =====
     public HoldingRecord recordHolding(HoldingRecord record) {
         return saveHolding(record);
     }
 
-    // test expects primitive long
     public HoldingRecord getHoldingById(long id) {
         return repo.findById(id).orElse(null);
     }
