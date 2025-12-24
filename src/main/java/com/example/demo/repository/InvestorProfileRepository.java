@@ -1,18 +1,35 @@
+// package com.example.demo.repository;
+
+// import java.util.Optional;
+
+// import org.springframework.data.jpa.repository.JpaRepository;
+
+// import com.example.demo.entity.InvestorProfile;
+
+// public interface InvestorProfileRepository
+//         extends JpaRepository<InvestorProfile, Long> {
+
+//     Optional<InvestorProfile> findByInvestorId(String investorId);
+//     Optional<InvestorProfile> findByEmail(String email);
+    
+// }
+
+
+
 package com.example.demo.repository;
 
-import java.util.Optional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.Optional;
 
 import com.example.demo.entity.InvestorProfile;
 
 public interface InvestorProfileRepository
         extends JpaRepository<InvestorProfile, Long> {
 
-    Optional<InvestorProfile> findByInvestorId(String investorId);
-    Optional<InvestorProfile> findByEmail(String email);
+    // 🔥 TEST EXPECTS Optional
     Optional<InvestorProfile> findByEmail(String email);
 
-    // 🔥 TEST ALSO EXPECTS THIS
+    // 🔥 TEST EXPECTS Optional
     Optional<InvestorProfile> findByInvestorId(String investorId);
 }
+
