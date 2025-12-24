@@ -45,6 +45,7 @@ package com.example.demo.service.impl;
 
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 import com.example.demo.entity.HoldingRecord;
 import com.example.demo.repository.HoldingRecordRepository;
@@ -63,13 +64,14 @@ public class HoldingRecordServiceImpl {
         return holdingRecordRepository.save(record);
     }
 
-    // 🔥 TEST EXPECTS THIS
-    public HoldingRecord getHoldingById(long id) {
-        return holdingRecordRepository.findById(id).orElse(null);
+    // 🔥🔥🔥 UPDATED: TEST EXPECTS Optional
+    public Optional<HoldingRecord> getHoldingById(long id) {
+        return holdingRecordRepository.findById(id);
     }
 
-    // 🔥🔥🔥 THIS IS THE MISSING METHOD (MAIN ERROR)
+    // 🔥 TEST EXPECTS THIS
     public List<HoldingRecord> getHoldingsByInvestor(long investorId) {
         return holdingRecordRepository.findByInvestorId(investorId);
     }
 }
+
