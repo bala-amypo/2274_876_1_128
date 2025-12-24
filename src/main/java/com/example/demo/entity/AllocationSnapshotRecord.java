@@ -69,16 +69,19 @@ public class AllocationSnapshotRecord {
 
     private LocalDateTime snapshotDate;
 
+    // 🔥 total portfolio value
     private Double totalValue;
 
+    // snapshot data (map as string)
     private String snapshotData;
 
-    // ✅ No-args constructor (JPA)
+    // JPA default constructor
     public AllocationSnapshotRecord() {
         this.snapshotDate = LocalDateTime.now();
+        this.totalValue = 0.0;
     }
 
-    // 🔥 EXISTING constructor (keep it)
+    // Existing constructor
     public AllocationSnapshotRecord(Long investorId,
                                     LocalDateTime snapshotDate,
                                     Double totalValue,
@@ -89,7 +92,7 @@ public class AllocationSnapshotRecord {
         this.snapshotData = snapshotData;
     }
 
-    // 🔥🔥🔥 MISSING CONSTRUCTOR – THIS FIXES ERROR
+    // Constructor used by service
     public AllocationSnapshotRecord(Long investorId, String snapshotData) {
         this.investorId = investorId;
         this.snapshotData = snapshotData;
@@ -97,17 +100,41 @@ public class AllocationSnapshotRecord {
         this.totalValue = 0.0;
     }
 
-    public Long getId() { return id; }
+    public Long getId() {
+        return id;
+    }
 
-    public void setId(Long id) { this.id = id; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public Long getInvestorId() { return investorId; }
+    public Long getInvestorId() {
+        return investorId;
+    }
 
-    public LocalDateTime getSnapshotDate() { return snapshotDate; }
+    public LocalDateTime getSnapshotDate() {
+        return snapshotDate;
+    }
 
-    public Double getTotalValue() { return totalValue; }
+    public String getSnapshotData() {
+        return snapshotData;
+    }
 
-    public String getSnapshotData() { return snapshotData; }
+    /* =====================================================
+       🔥🔥🔥 THIS IS THE MISSING METHOD (MAIN FIX)
+       ===================================================== */
+    public Double getTotalPortfolioValue() {
+        return totalValue;
+    }
+
+    // keep normal getter also (safe)
+    public Double getTotalValue() {
+        return totalValue;
+    }
+
+    public void setTotalValue(Double totalValue) {
+        this.totalValue = totalValue;
+    }
 }
 
 
