@@ -174,6 +174,58 @@
 //     }
 // }
 
+// package com.example.demo.service.impl;
+
+// import org.springframework.stereotype.Service;
+// import java.util.List;
+
+// import com.example.demo.entity.HoldingRecord;
+// import com.example.demo.entity.enums.AssetClassType;
+// import com.example.demo.repository.HoldingRecordRepository;
+// import com.example.demo.service.HoldingRecordService;
+
+// @Service
+// public class HoldingRecordServiceImpl
+//         implements HoldingRecordService {
+
+//     private final HoldingRecordRepository holdingRecordRepository;
+
+//     public HoldingRecordServiceImpl(HoldingRecordRepository holdingRecordRepository) {
+//         this.holdingRecordRepository = holdingRecordRepository;
+//     }
+
+//     @Override
+//     public HoldingRecord saveHolding(HoldingRecord record) {
+
+//         if (record.getValue() == null || record.getValue() <= 0) {
+//             throw new IllegalArgumentException(
+//                     "Holding value must be greater than zero");
+//         }
+
+//         return holdingRecordRepository.save(record);
+//     }
+
+//     @Override
+//     public List<HoldingRecord> getHoldingsByInvestor(Long investorId) {
+//         return holdingRecordRepository.findByInvestorId(investorId);
+//     }
+
+//     @Override
+//     public List<HoldingRecord> getHoldingsAboveValue(Double value) {
+//         return holdingRecordRepository.findByValueGreaterThan(value);
+//     }
+
+//     // 🔥 FINAL FIX HERE
+//     @Override
+//     public List<HoldingRecord> getHoldingsByInvestorAndAsset(
+//             Long investorId,
+//             AssetClassType assetClass) {
+
+//         return holdingRecordRepository
+//                 .findByInvestorIdAndAssetClass(investorId, assetClass);
+//     }
+// }
+
 package com.example.demo.service.impl;
 
 import org.springframework.stereotype.Service;
@@ -188,11 +240,13 @@ import com.example.demo.service.HoldingRecordService;
 public class HoldingRecordServiceImpl
         implements HoldingRecordService {
 
-    private final HoldingRecordRepository holdingRecordRepository;
+    private final HoldingRecordRepository repo;
 
-    public HoldingRecordServiceImpl(HoldingRecordRepository holdingRecordRepository) {
-        this.holdingRecordRepository = holdingRecordRepository;
+    public HoldingRecordServiceImpl(HoldingRecordRepository repo) {
+        this.repo = repo;
     }
+
+    // ===== Swagger / Interface methods =====
 
     @Override
     public HoldingRecord saveHolding(HoldingRecord record) {
@@ -201,28 +255,36 @@ public class HoldingRecordServiceImpl
             throw new IllegalArgumentException(
                     "Holding value must be greater than zero");
         }
-
-        return holdingRecordRepository.save(record);
+        return repo.save(record);
     }
 
     @Override
     public List<HoldingRecord> getHoldingsByInvestor(Long investorId) {
-        return holdingRecordRepository.findByInvestorId(investorId);
+        return repo.findByInvestorId(investorId);
     }
 
     @Override
     public List<HoldingRecord> getHoldingsAboveValue(Double value) {
-        return holdingRecordRepository.findByValueGreaterThan(value);
+        return repo.findByValueGreaterThan(value);
     }
 
-    // 🔥 FINAL FIX HERE
     @Override
     public List<HoldingRecord> getHoldingsByInvestorAndAsset(
             Long investorId,
             AssetClassType assetClass) {
 
-        return holdingRecordRepository
-                .findByInvestorIdAndAssetClass(investorId, assetClass);
+        return repo.findByInvestorIdAndAssetClass(investorId, assetClass);
+    }
+
+    // ===== TEST ALIAS METHODS (DO NOT REMOVE) =====
+
+    // 🔥 Test expects this name
+    public HoldingRecord recordHolding(HoldingRecord record) {
+        return saveHolding(record);
+    }
+
+    // 🔥 Test expects primitive long
+    public HoldingRecord getHoldingById(long id) {
+        return repo.findById(id).orElse(null);
     }
 }
-
