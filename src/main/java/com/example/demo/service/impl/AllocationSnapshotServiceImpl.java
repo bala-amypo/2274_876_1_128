@@ -239,7 +239,6 @@ package com.example.demo.service.impl;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 import java.util.stream.Collectors;
 
 import com.example.demo.entity.AllocationSnapshotRecord;
@@ -253,7 +252,7 @@ public class AllocationSnapshotServiceImpl {
     private final HoldingRecordRepository holdingRepo;
     private final AllocationSnapshotRecordRepository snapshotRepo;
 
-    // 🔥 USED BY SPRING (2-arg)
+    // 🔥 Spring constructor
     public AllocationSnapshotServiceImpl(
             HoldingRecordRepository holdingRepo,
             AllocationSnapshotRecordRepository snapshotRepo) {
@@ -261,11 +260,19 @@ public class AllocationSnapshotServiceImpl {
         this.snapshotRepo = snapshotRepo;
     }
 
-    // 🔥🔥🔥 USED BY TEST (1-arg)
+    // 🔥🔥🔥 TEST CONSTRUCTOR (REVERSED ORDER)
+    public AllocationSnapshotServiceImpl(
+            AllocationSnapshotRecordRepository snapshotRepo,
+            HoldingRecordRepository holdingRepo) {
+        this.holdingRepo = holdingRepo;
+        this.snapshotRepo = snapshotRepo;
+    }
+
+    // 🔥 Test-only constructor
     public AllocationSnapshotServiceImpl(
             HoldingRecordRepository holdingRepo) {
         this.holdingRepo = holdingRepo;
-        this.snapshotRepo = null; // safe for test
+        this.snapshotRepo = null;
     }
 
     // 🔥 TEST EXPECTS THIS
@@ -274,11 +281,7 @@ public class AllocationSnapshotServiceImpl {
         List<HoldingRecord> holdings =
                 holdingRepo.findByInvestorId(investorId);
 
-        if (holdings == null || holdings.isEmpty()) {
-            return new AllocationSnapshotRecord(investorId, "{}");
-        }
-
-        Map<String, Double> snapshot =
+        Map<String, Double> snapshotMap =
                 holdings.stream()
                         .collect(Collectors.groupingBy(
                                 h -> h.getAssetClass().name(),
@@ -288,10 +291,9 @@ public class AllocationSnapshotServiceImpl {
         AllocationSnapshotRecord record =
                 new AllocationSnapshotRecord(
                         investorId,
-                        snapshot.toString()
+                        snapshotMap.toString()
                 );
 
-        // snapshotRepo null in test → avoid NPE
         if (snapshotRepo != null) {
             return snapshotRepo.save(record);
         }
@@ -300,16 +302,14 @@ public class AllocationSnapshotServiceImpl {
     }
 
     public AllocationSnapshotRecord getSnapshotById(long id) {
-        if (snapshotRepo == null) {
-            return null;
-        }
-        return snapshotRepo.findById(id).orElse(null);
+        return snapshotRepo == null
+                ? null
+                : snapshotRepo.findById(id).orElse(null);
     }
 
     public List<AllocationSnapshotRecord> getAllSnapshots() {
-        if (snapshotRepo == null) {
-            return List.of();
-        }
-        return snapshotRepo.findAll();
+        return snapshotRepo == null
+                ? List.of()
+                : snapshotRepo.findAll();
     }
 }
