@@ -168,17 +168,16 @@ public class HoldingRecord {
     @Enumerated(EnumType.STRING)
     private AssetClassType assetClass;
 
-    // 🔥 Test expects this field
+    // test expects this
     private Double currentValue;
 
     private LocalDateTime createdAt;
 
-    // ✅ Default constructor
     public HoldingRecord() {
         this.createdAt = LocalDateTime.now();
     }
 
-    // 🔥🔥🔥 TEST EXPECTED CONSTRUCTOR
+    // 🔥 TEST EXPECTED CONSTRUCTOR
     public HoldingRecord(Long investorId,
                          AssetClassType assetClass,
                          Double currentValue,
@@ -189,55 +188,16 @@ public class HoldingRecord {
         this.createdAt = createdAt;
     }
 
-    // ===== Getters & Setters =====
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public Long getId() {
-        return id;
-    }
+    public Long getInvestorId() { return investorId; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public AssetClassType getAssetClass() { return assetClass; }
 
-    public Long getInvestorId() {
-        return investorId;
-    }
+    // test uses this
+    public Double getCurrentValue() { return currentValue; }
 
-    public void setInvestorId(Long investorId) {
-        this.investorId = investorId;
-    }
-
-    public AssetClassType getAssetClass() {
-        return assetClass;
-    }
-
-    public void setAssetClass(AssetClassType assetClass) {
-        this.assetClass = assetClass;
-    }
-
-    // 🔥 TEST CALLS THIS
-    public Double getCurrentValue() {
-        return currentValue;
-    }
-
-    public void setCurrentValue(Double currentValue) {
-        this.currentValue = currentValue;
-    }
-
-    // 🔥 SERVICE / STREAM CODE USES THIS
-    public Double getValue() {
-        return currentValue;
-    }
-
-    public void setValue(Double value) {
-        this.currentValue = value;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
+    // service / stream uses this
+    public Double getValue() { return currentValue; }
 }
