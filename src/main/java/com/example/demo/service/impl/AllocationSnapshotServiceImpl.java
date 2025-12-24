@@ -246,6 +246,7 @@ public class AllocationSnapshotServiceImpl
 
     @Override
     public AllocationSnapshotRecord computeSnapshot(long investorId) {
+
         List<HoldingRecord> holdings =
                 holdingRepo.findByInvestorId(investorId);
 
@@ -275,8 +276,9 @@ public class AllocationSnapshotServiceImpl
         return snapshotRepo.save(record);
     }
 
+    // 🔥 FIXED HERE (long → Long)
     @Override
-    public AllocationSnapshotRecord getSnapshotById(long id) {
+    public AllocationSnapshotRecord getSnapshotById(Long id) {
         return snapshotRepo.findById(id)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Snapshot not found"));
@@ -287,7 +289,6 @@ public class AllocationSnapshotServiceImpl
         return snapshotRepo.findAll();
     }
 
-    // 🔥 MISSING METHOD — THIS FIXES THE ERROR
     @Override
     public List<AllocationSnapshotRecord> getSnapshotsByInvestor(Long investorId) {
         return snapshotRepo.findByInvestorId(investorId);
