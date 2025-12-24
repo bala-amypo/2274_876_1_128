@@ -1,6 +1,65 @@
+// package com.example.demo.service.impl;
+
+// import java.util.List;
+
+// import org.springframework.stereotype.Service;
+
+// import com.example.demo.entity.InvestorProfile;
+// import com.example.demo.exception.ResourceNotFoundException;
+// import com.example.demo.repository.InvestorProfileRepository;
+// import com.example.demo.service.InvestorProfileService;
+
+// @Service
+// public class InvestorProfileServiceImpl implements InvestorProfileService {
+
+//     private final InvestorProfileRepository repository;
+
+//     public InvestorProfileServiceImpl(InvestorProfileRepository repository) {
+//         this.repository = repository;
+//     }
+
+//     @Override
+//     public InvestorProfile createInvestor(InvestorProfile investor) {
+//         return repository.save(investor);
+//     }
+
+//     @Override
+//     public InvestorProfile getInvestorById(Long id) {
+//         return repository.findById(id)
+//                 .orElseThrow(() ->
+//                         new ResourceNotFoundException(
+//                                 "Investor not found with id: " + id));
+//     }
+
+//     @Override
+//     public InvestorProfile findByInvestorId(String investorId) {
+//         return repository.findByInvestorId(investorId)
+//                 .orElseThrow(() ->
+//                         new ResourceNotFoundException(
+//                                 "Investor not found with investorId: " + investorId));
+//     }
+
+//     @Override
+//     public List<InvestorProfile> getAllInvestors() {
+//         return repository.findAll();
+//     }
+     
+//     @Override
+//     public InvestorProfile updateInvestorStatus(Long id, boolean active) {
+//         InvestorProfile investor = getInvestorById(id);
+//         investor.setActive(active);
+//         return repository.save(investor);
+//     }
+// }
+
+
+
+
+
 package com.example.demo.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -31,19 +90,23 @@ public class InvestorProfileServiceImpl implements InvestorProfileService {
                                 "Investor not found with id: " + id));
     }
 
+    // 🔥🔥🔥 UPDATED: return Optional
     @Override
-    public InvestorProfile findByInvestorId(String investorId) {
-        return repository.findByInvestorId(investorId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(
-                                "Investor not found with investorId: " + investorId));
+    public Optional<InvestorProfile> findByInvestorId(String investorId) {
+        return repository.findByInvestorId(investorId);
+    }
+
+    // 🔥🔥🔥 UPDATED: return Optional
+    @Override
+    public Optional<InvestorProfile> findByEmail(String email) {
+        return repository.findByEmail(email);
     }
 
     @Override
     public List<InvestorProfile> getAllInvestors() {
         return repository.findAll();
     }
-     
+
     @Override
     public InvestorProfile updateInvestorStatus(Long id, boolean active) {
         InvestorProfile investor = getInvestorById(id);
