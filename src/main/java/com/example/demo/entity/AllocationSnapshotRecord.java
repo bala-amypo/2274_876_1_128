@@ -93,6 +93,7 @@ public class AllocationSnapshotRecord {
     public Long getId() {
         return id;
     }
+    
 
     public Long getInvestorId() {
         return investorId;
