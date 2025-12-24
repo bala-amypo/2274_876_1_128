@@ -58,17 +58,17 @@ package com.example.demo.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
+
 import com.example.demo.entity.HoldingRecord;
 
 public interface HoldingRecordRepository extends JpaRepository<HoldingRecord, Long> {
 
-    // 🔥 AllocationSnapshotServiceImpl EXPECTS THIS
+    // 🔥 Used by getHoldingsByInvestor()
     List<HoldingRecord> findByInvestorId(Long investorId);
 
-    // 🔥 Tests EXPECT THIS
+    // 🔥 Tests expect this
     List<HoldingRecord> findByValueGreaterThan(Double value);
 
-    // optional (safe – if currentValue field used)
+    // optional safety
     List<HoldingRecord> findByCurrentValueGreaterThan(Double value);
 }
-
