@@ -287,6 +287,76 @@
 //     public HoldingRecord getHoldingById(long id) {
 //         return repo.findById(id).orElse(null);
 //     }
+// // }package com.example.demo.service.impl;
+
+// import org.springframework.stereotype.Service;
+// import java.util.List;
+
+// import com.example.demo.entity.HoldingRecord;
+// import com.example.demo.entity.enums.AssetClassType;
+// import com.example.demo.repository.HoldingRecordRepository;
+// import com.example.demo.service.HoldingRecordService;
+
+// @Service
+// public class HoldingRecordServiceImpl
+//         implements HoldingRecordService {
+
+//     private final HoldingRecordRepository repo;
+
+//     public HoldingRecordServiceImpl(HoldingRecordRepository repo) {
+//         this.repo = repo;
+//     }
+
+//     // ===== Swagger / Interface methods =====
+
+//     @Override
+//     public HoldingRecord saveHolding(HoldingRecord record) {
+
+//         if (record.getValue() == null || record.getValue() <= 0) {
+//             throw new IllegalArgumentException(
+//                     "Holding value must be greater than zero");
+//         }
+//         return repo.save(record);
+//     }
+
+//     @Override
+//     public List<HoldingRecord> getHoldingsByInvestor(Long investorId) {
+//         return repo.findByInvestorId(investorId);
+//     }
+
+//     @Override
+//     public List<HoldingRecord> getHoldingsAboveValue(Double value) {
+//         return repo.findByValueGreaterThan(value);
+//     }
+
+//     // Swagger / Interface version
+//     @Override
+//     public List<HoldingRecord> getHoldingsByInvestorAndAsset(
+//             Long investorId,
+//             AssetClassType assetClass) {
+
+//         return repo.findByInvestorIdAndAssetClass(investorId, assetClass);
+//     }
+
+//     // ===== TEST ALIAS METHODS (DO NOT REMOVE) =====
+
+//     // 🔥 Test expects this name
+//     public HoldingRecord recordHolding(HoldingRecord record) {
+//         return saveHolding(record);
+//     }
+
+//     // 🔥 Test expects primitive long
+//     public HoldingRecord getHoldingById(long id) {
+//         return repo.findById(id).orElse(null);
+//     }
+
+//     // 🔥 Test expects this exact signature
+//     public List<HoldingRecord> getHoldingsByInvestorAndAsset(
+//             long investorId,
+//             AssetClassType assetClass) {
+
+//         return repo.findByInvestorAndAssetClass(investorId, assetClass);
+//     }
 // }
 
 package com.example.demo.service.impl;
@@ -300,8 +370,7 @@ import com.example.demo.repository.HoldingRecordRepository;
 import com.example.demo.service.HoldingRecordService;
 
 @Service
-public class HoldingRecordServiceImpl
-        implements HoldingRecordService {
+public class HoldingRecordServiceImpl implements HoldingRecordService {
 
     private final HoldingRecordRepository repo;
 
@@ -309,8 +378,7 @@ public class HoldingRecordServiceImpl
         this.repo = repo;
     }
 
-    // ===== Swagger / Interface methods =====
-
+    // ===== Swagger + Interface =====
     @Override
     public HoldingRecord saveHolding(HoldingRecord record) {
 
@@ -331,7 +399,6 @@ public class HoldingRecordServiceImpl
         return repo.findByValueGreaterThan(value);
     }
 
-    // Swagger / Interface version
     @Override
     public List<HoldingRecord> getHoldingsByInvestorAndAsset(
             Long investorId,
@@ -340,23 +407,15 @@ public class HoldingRecordServiceImpl
         return repo.findByInvestorIdAndAssetClass(investorId, assetClass);
     }
 
-    // ===== TEST ALIAS METHODS (DO NOT REMOVE) =====
+    // ===== TEST ALIAS METHODS (DO NOT DELETE) =====
 
-    // 🔥 Test expects this name
+    // test expects this exact name
     public HoldingRecord recordHolding(HoldingRecord record) {
         return saveHolding(record);
     }
 
-    // 🔥 Test expects primitive long
+    // test expects primitive long
     public HoldingRecord getHoldingById(long id) {
         return repo.findById(id).orElse(null);
-    }
-
-    // 🔥 Test expects this exact signature
-    public List<HoldingRecord> getHoldingsByInvestorAndAsset(
-            long investorId,
-            AssetClassType assetClass) {
-
-        return repo.findByInvestorAndAssetClass(investorId, assetClass);
     }
 }
