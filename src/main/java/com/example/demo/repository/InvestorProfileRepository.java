@@ -11,4 +11,8 @@ public interface InvestorProfileRepository
 
     Optional<InvestorProfile> findByInvestorId(String investorId);
     Optional<InvestorProfile> findByEmail(String email);
+    Optional<InvestorProfile> findByEmail(String email);
+
+    // 🔥 TEST ALSO EXPECTS THIS
+    Optional<InvestorProfile> findByInvestorId(String investorId);
 }
