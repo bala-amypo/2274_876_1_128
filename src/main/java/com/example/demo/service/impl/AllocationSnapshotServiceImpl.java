@@ -219,7 +219,6 @@ public class AllocationSnapshotServiceImpl
     private HoldingRecordRepository holdingRepo;
     private AllocationSnapshotRecordRepository snapshotRepo;
 
-    // Spring constructor
     public AllocationSnapshotServiceImpl(
             HoldingRecordRepository holdingRepo,
             AllocationSnapshotRecordRepository snapshotRepo) {
@@ -227,7 +226,6 @@ public class AllocationSnapshotServiceImpl
         this.snapshotRepo = snapshotRepo;
     }
 
-    // Test reversed order constructor
     public AllocationSnapshotServiceImpl(
             AllocationSnapshotRecordRepository snapshotRepo,
             HoldingRecordRepository holdingRepo) {
@@ -235,7 +233,6 @@ public class AllocationSnapshotServiceImpl
         this.snapshotRepo = snapshotRepo;
     }
 
-    // Universal constructor (test-safe)
     public AllocationSnapshotServiceImpl(Object... args) {
         for (Object arg : args) {
             if (arg instanceof HoldingRecordRepository) {
@@ -249,7 +246,6 @@ public class AllocationSnapshotServiceImpl
 
     @Override
     public AllocationSnapshotRecord computeSnapshot(long investorId) {
-
         List<HoldingRecord> holdings =
                 holdingRepo.findByInvestorId(investorId);
 
@@ -276,20 +272,11 @@ public class AllocationSnapshotServiceImpl
                 );
 
         record.setTotalValue(totalValue);
-
-        if (snapshotRepo != null) {
-            return snapshotRepo.save(record);
-        }
-
-        return record;
+        return snapshotRepo.save(record);
     }
 
     @Override
     public AllocationSnapshotRecord getSnapshotById(long id) {
-        if (snapshotRepo == null) {
-            throw new ResourceNotFoundException("Snapshot not found");
-        }
-
         return snapshotRepo.findById(id)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Snapshot not found"));
@@ -297,8 +284,12 @@ public class AllocationSnapshotServiceImpl
 
     @Override
     public List<AllocationSnapshotRecord> getAllSnapshots() {
-        return snapshotRepo == null
-                ? List.of()
-                : snapshotRepo.findAll();
+        return snapshotRepo.findAll();
+    }
+
+    // 🔥 MISSING METHOD — THIS FIXES THE ERROR
+    @Override
+    public List<AllocationSnapshotRecord> getSnapshotsByInvestor(Long investorId) {
+        return snapshotRepo.findByInvestorId(investorId);
     }
 }
