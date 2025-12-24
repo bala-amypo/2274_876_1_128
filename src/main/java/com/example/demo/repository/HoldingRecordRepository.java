@@ -48,11 +48,35 @@
 //     Optional<HoldingRecord> findById(Long id);
 // }
 
+// package com.example.demo.repository;
+
+// import org.springframework.data.jpa.repository.JpaRepository;
+// import java.util.List;
+// import java.util.Optional;
+
+// import com.example.demo.entity.HoldingRecord;
+// import com.example.demo.entity.enums.AssetClassType;
+
+// public interface HoldingRecordRepository
+//         extends JpaRepository<HoldingRecord, Long> {
+
+//     List<HoldingRecord> findByInvestorId(Long investorId);
+
+//     // 🔥 FIXED METHOD NAME
+//     List<HoldingRecord> findByInvestorIdAndAssetClass(
+//             Long investorId, AssetClassType assetClass);
+
+//     // ✅ This is correct
+//     List<HoldingRecord> findByValueGreaterThan(Double value);
+
+//     // (Optional) JpaRepository already has this, but ok to keep
+//     Optional<HoldingRecord> findById(Long id);
+// }
+
 package com.example.demo.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
-import java.util.Optional;
 
 import com.example.demo.entity.HoldingRecord;
 import com.example.demo.entity.enums.AssetClassType;
@@ -60,16 +84,21 @@ import com.example.demo.entity.enums.AssetClassType;
 public interface HoldingRecordRepository
         extends JpaRepository<HoldingRecord, Long> {
 
+    // Used by services
     List<HoldingRecord> findByInvestorId(Long investorId);
 
-    // 🔥 FIXED METHOD NAME
+    // Used by services (Spring style)
     List<HoldingRecord> findByInvestorIdAndAssetClass(
-            Long investorId, AssetClassType assetClass);
+            Long investorId,
+            AssetClassType assetClass
+    );
 
-    // ✅ This is correct
+    // 🔥 REQUIRED BY TEST CASES (ALIAS)
+    List<HoldingRecord> findByInvestorAndAssetClass(
+            Long investorId,
+            AssetClassType assetClass
+    );
+
+    // Used by value filter test
     List<HoldingRecord> findByValueGreaterThan(Double value);
-
-    // (Optional) JpaRepository already has this, but ok to keep
-    Optional<HoldingRecord> findById(Long id);
 }
-
