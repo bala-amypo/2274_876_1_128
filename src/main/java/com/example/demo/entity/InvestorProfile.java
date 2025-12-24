@@ -1,65 +1,65 @@
-package com.example.demo.entity;
+// package com.example.demo.entity;
 
-import jakarta.persistence.*;
-import java.time.LocalDateTime;
+// import jakarta.persistence.*;
+// import java.time.LocalDateTime;
 
-@Entity
-@Table(
-    name = "investor_profile",
-    uniqueConstraints = {
-        @UniqueConstraint(columnNames = "investorId"),
-        @UniqueConstraint(columnNames = "email")
-    }
-)
-public class InvestorProfile {
+// @Entity
+// @Table(
+//     name = "investor_profile",
+//     uniqueConstraints = {
+//         @UniqueConstraint(columnNames = "investorId"),
+//         @UniqueConstraint(columnNames = "email")
+//     }
+// )
+// public class InvestorProfile {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+//     @Id
+//     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//     private Long id;
 
-    @Column(unique = true, nullable = false)
-    private String investorId;
+//     @Column(unique = true, nullable = false)
+//     private String investorId;
 
-    private String fullName;
+//     private String fullName;
 
-    @Column(unique = true, nullable = false)
-    private String email;
+//     @Column(unique = true, nullable = false)
+//     private String email;
 
-    @Column(nullable = false)
-    private Boolean active;
+//     @Column(nullable = false)
+//     private Boolean active;
 
-    private LocalDateTime createdAt;
+//     private LocalDateTime createdAt;
 
-    public InvestorProfile() {
-        this.active = true;
-        this.createdAt = LocalDateTime.now();
-    }
+//     public InvestorProfile() {
+//         this.active = true;
+//         this.createdAt = LocalDateTime.now();
+//     }
 
-    public InvestorProfile(Long id, String investorId, String fullName,
-                           String email, Boolean active, LocalDateTime createdAt) {
-        this.id = id;
-        this.investorId = investorId;
-        this.fullName = fullName;
-        this.email = email;
-        this.active = active;
-        this.createdAt = createdAt;
-    }
+//     public InvestorProfile(Long id, String investorId, String fullName,
+//                            String email, Boolean active, LocalDateTime createdAt) {
+//         this.id = id;
+//         this.investorId = investorId;
+//         this.fullName = fullName;
+//         this.email = email;
+//         this.active = active;
+//         this.createdAt = createdAt;
+//     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+//     public Long getId() { return id; }
+//     public void setId(Long id) { this.id = id; }
 
-    public String getInvestorId() { return investorId; }
-    public void setInvestorId(String investorId) { this.investorId = investorId; }
+//     public String getInvestorId() { return investorId; }
+//     public void setInvestorId(String investorId) { this.investorId = investorId; }
 
-    public String getFullName() { return fullName; }
-    public void setFullName(String fullName) { this.fullName = fullName; }
+//     public String getFullName() { return fullName; }
+//     public void setFullName(String fullName) { this.fullName = fullName; }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+//     public String getEmail() { return email; }
+//     public void setEmail(String email) { this.email = email; }
 
-    public Boolean getActive() { return active; }
-    public void setActive(Boolean active) { this.active = active; }
+//     public Boolean getActive() { return active; }
+//     public void setActive(Boolean active) { this.active = active; }
 
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
-}
+//     public LocalDateTime getCreatedAt() { return createdAt; }
+//     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+// }
