@@ -60,13 +60,18 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 import com.example.demo.entity.HoldingRecord;
+import com.example.demo.entity.enums.AssetClassType;
 
 public interface HoldingRecordRepository extends JpaRepository<HoldingRecord, Long> {
 
-    // 🔥 Used by getHoldingsByInvestor()
+    // 🔥 already used
     List<HoldingRecord> findByInvestorId(Long investorId);
 
-    // 🔥 Tests expect this
+    // 🔥 NEW – test expects this
+    List<HoldingRecord> findByInvestorAndAssetClass(Long investorId,
+                                                    AssetClassType assetClass);
+
+    // 🔥 test expects this
     List<HoldingRecord> findByValueGreaterThan(Double value);
 
     // optional safety

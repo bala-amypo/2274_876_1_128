@@ -200,4 +200,7 @@ public class HoldingRecord {
 
     // service / stream uses this
     public Double getValue() { return currentValue; }
+    public boolean isEmpty() {
+        return currentValue == null || currentValue.doubleValue() == 0.0;
+    }
 }
