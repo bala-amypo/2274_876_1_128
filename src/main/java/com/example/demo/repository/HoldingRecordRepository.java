@@ -140,29 +140,29 @@
 //     Optional<HoldingRecord> findById(Long id);
 // }
 
-package com.example.demo.repository;
+// package com.example.demo.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import java.util.List;
-import java.util.Optional;
+// import org.springframework.data.jpa.repository.JpaRepository;
+// import java.util.List;
+// import java.util.Optional;
 
-import com.example.demo.entity.HoldingRecord;
-import com.example.demo.entity.enums.AssetClassType;
+// import com.example.demo.entity.HoldingRecord;
+// import com.example.demo.entity.enums.AssetClassType;
 
-public interface HoldingRecordRepository
-        extends JpaRepository<HoldingRecord, Long> {
+// public interface HoldingRecordRepository
+//         extends JpaRepository<HoldingRecord, Long> {
 
-    // Used by Swagger + Service
-    List<HoldingRecord> findByInvestorId(Long investorId);
+//     // Used by Swagger + Service
+//     List<HoldingRecord> findByInvestorId(Long investorId);
 
-    // ✅ ENTITY FIELD MATCHES (CORRECT)
-    List<HoldingRecord> findByInvestorIdAndAssetClass(
-            Long investorId,
-            AssetClassType assetClass);
+//     // ✅ ENTITY FIELD MATCHES (CORRECT)
+//     List<HoldingRecord> findByInvestorIdAndAssetClass(
+//             Long investorId,
+//             AssetClassType assetClass);
 
-    // Used by test case: getHoldingsAboveValue
-    List<HoldingRecord> findByValueGreaterThan(Double value);
+//     // Used by test case: getHoldingsAboveValue
+//     List<HoldingRecord> findByValueGreaterThan(Double value);
 
-    // JpaRepository already has this, but test expects it explicitly
-    Optional<HoldingRecord> findById(Long id);
-}
+//     // JpaRepository already has this, but test expects it explicitly
+//     Optional<HoldingRecord> findById(Long id);
+// }
