@@ -76,4 +76,5 @@ public interface HoldingRecordRepository extends JpaRepository<HoldingRecord, Lo
 
     // optional safety
     List<HoldingRecord> findByCurrentValueGreaterThan(Double value);
+    Optional<HoldingRecord> findById(Long id);
 }
