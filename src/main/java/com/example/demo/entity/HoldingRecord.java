@@ -150,6 +150,7 @@
 // }
 
 
+
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
@@ -187,17 +188,37 @@ public class HoldingRecord {
         this.createdAt = createdAt;
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
 
-    public Long getInvestorId() { return investorId; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public AssetClassType getAssetClass() { return assetClass; }
+    public Long getInvestorId() {
+        return investorId;
+    }
 
-    // 🔥 REQUIRED BY TEST + STREAM
-    public Double getValue() { return value; }
-    public void setValue(Double value) { this.value = value; }
+    public AssetClassType getAssetClass() {
+        return assetClass;
+    }
 
+    // 🔥 ORIGINAL getter
+    public Double getValue() {
+        return value;
+    }
+
+    // 🔥🔥🔥 TEST ALSO CALLS THIS (ALIAS)
+    public Double getCurrentValue() {
+        return value;
+    }
+
+    public void setValue(Double value) {
+        this.value = value;
+    }
+
+    // 🔥 TEST USES THIS
     public boolean isEmpty() {
         return value == null || value == 0.0;
     }
