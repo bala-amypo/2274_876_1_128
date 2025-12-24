@@ -58,23 +58,19 @@ package com.example.demo.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
+import java.util.Optional;   // 🔥 MISSING IMPORT – THIS IS THE FIX
 
 import com.example.demo.entity.HoldingRecord;
 import com.example.demo.entity.enums.AssetClassType;
 
-public interface HoldingRecordRepository extends JpaRepository<HoldingRecord, Long> {
+public interface HoldingRecordRepository
+        extends JpaRepository<HoldingRecord, Long> {
 
-    // 🔥 already used
     List<HoldingRecord> findByInvestorId(Long investorId);
 
-    // 🔥 NEW – test expects this
-    List<HoldingRecord> findByInvestorAndAssetClass(Long investorId,
-                                                    AssetClassType assetClass);
+    List<HoldingRecord> findByInvestorAndAssetClass(
+            Long investorId, AssetClassType assetClass);
 
-    // 🔥 test expects this
-    List<HoldingRecord> findByValueGreaterThan(Double value);
-
-    // optional safety
-    List<HoldingRecord> findByCurrentValueGreaterThan(Double value);
+    // 🔥 Optional now works
     Optional<HoldingRecord> findById(Long id);
 }

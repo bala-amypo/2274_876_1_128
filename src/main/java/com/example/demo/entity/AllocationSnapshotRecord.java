@@ -51,13 +51,14 @@
 //     }
 // }
 
+
+
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "allocation_snapshot_record")
 public class AllocationSnapshotRecord {
 
     @Id
@@ -68,65 +69,47 @@ public class AllocationSnapshotRecord {
 
     private LocalDateTime snapshotDate;
 
-    private Double totalPortfolioValue;
+    private Double totalValue;
 
-    @Lob
-    @Column(columnDefinition = "TEXT")
-    private String allocationJson;
+    private String snapshotData;
 
-    // Default constructor (JPA-ku mandatory)
+    // ✅ No-args constructor (JPA)
     public AllocationSnapshotRecord() {
+        this.snapshotDate = LocalDateTime.now();
     }
 
-    // Parameterized constructor
+    // 🔥 EXISTING constructor (keep it)
     public AllocationSnapshotRecord(Long investorId,
                                     LocalDateTime snapshotDate,
-                                    Double totalPortfolioValue,
-                                    String allocationJson) {
+                                    Double totalValue,
+                                    String snapshotData) {
         this.investorId = investorId;
         this.snapshotDate = snapshotDate;
-        this.totalPortfolioValue = totalPortfolioValue;
-        this.allocationJson = allocationJson;
+        this.totalValue = totalValue;
+        this.snapshotData = snapshotData;
     }
 
-    // Getters & Setters
-    public Long getId() {
-        return id;
+    // 🔥🔥🔥 MISSING CONSTRUCTOR – THIS FIXES ERROR
+    public AllocationSnapshotRecord(Long investorId, String snapshotData) {
+        this.investorId = investorId;
+        this.snapshotData = snapshotData;
+        this.snapshotDate = LocalDateTime.now();
+        this.totalValue = 0.0;
     }
+
+    public Long getId() { return id; }
+
     public void setId(Long id) { this.id = id; }
 
-    public Long getInvestorId() {
-        return investorId;
-    }
+    public Long getInvestorId() { return investorId; }
 
-    public void setInvestorId(Long investorId) {
-        this.investorId = investorId;
-    }
+    public LocalDateTime getSnapshotDate() { return snapshotDate; }
 
-    public LocalDateTime getSnapshotDate() {
-        return snapshotDate;
-    }
+    public Double getTotalValue() { return totalValue; }
 
-    public void setSnapshotDate(LocalDateTime snapshotDate) {
-        this.snapshotDate = snapshotDate;
-    }
-
-    public Double getTotalPortfolioValue() {
-        return totalPortfolioValue;
-    }
-
-    public void setTotalPortfolioValue(Double totalPortfolioValue) {
-        this.totalPortfolioValue = totalPortfolioValue;
-    }
-
-    public String getAllocationJson() {
-        return allocationJson;
-    }
-
-    public void setAllocationJson(String allocationJson) {
-        this.allocationJson = allocationJson;
-    }
+    public String getSnapshotData() { return snapshotData; }
 }
+
 
 
 
