@@ -29,7 +29,7 @@ public class UserAccount {
     public UserAccount() {
     }
 
-    // 4-param constructor
+    
     public UserAccount(String userName, String email, String password, RoleType role) {
         this.userName = userName;
         this.email = email;
@@ -38,7 +38,7 @@ public class UserAccount {
         this.active = true;
     }
 
-    // Getters and setters
+    
     public Long getId() { return id; }
     public String getUserName() { return userName; }
     public String getEmail() { return email; }
