@@ -12,10 +12,10 @@ public interface InvestorProfileService {
 
     InvestorProfile getInvestorById(Long id);
 
-    // 🔥 TEST EXPECTS Optional
+    
     Optional<InvestorProfile> findByInvestorId(String investorId);
 
-    // 🔥 TEST EXPECTS Optional
+    
     Optional<InvestorProfile> findByEmail(String email);
 
     List<InvestorProfile> getAllInvestors();
