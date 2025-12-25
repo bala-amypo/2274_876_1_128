@@ -23,13 +23,13 @@ public class JwtUtil {
     private final SecretKey secretKey;
     private final long validityInMs;
 
-    // ✅ REQUIRED BY TEST SUITE
+   
     public JwtUtil(String secret, long validityInMs) {
         this.secretKey = Keys.hmacShaKeyFor(secret.getBytes());
         this.validityInMs = validityInMs;
     }
 
-    // ✅ REQUIRED FOR SPRING (uses defaults)
+    
     public JwtUtil() {
         this(DEFAULT_SECRET, DEFAULT_VALIDITY);
     }
@@ -57,7 +57,7 @@ public class JwtUtil {
     }
 
     public boolean validateToken(String token) {
-        getClaims(token); // throws exception if invalid
+        getClaims(token); 
         return true;
     }
 

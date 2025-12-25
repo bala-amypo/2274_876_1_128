@@ -60,7 +60,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         .setAuthentication(authentication);
 
             } catch (Exception e) {
-                // ❗ Important: clear context on invalid token
+                
                 SecurityContextHolder.clearContext();
             }
         }

@@ -28,7 +28,7 @@ public interface HoldingRecordRepository
             @Param("investorId") Long investorId,
             @Param("assetClass") AssetClassType assetClass);
 
-    // Test
+    
     List<HoldingRecord> findByValueGreaterThan(Double value);
 
     Optional<HoldingRecord> findById(Long id);
