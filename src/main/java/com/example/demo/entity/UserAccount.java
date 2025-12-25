@@ -25,7 +25,7 @@ public class UserAccount {
 
     private Boolean active = true;
 
-    // Default constructor required by JPA
+    
     public UserAccount() {
     }
 

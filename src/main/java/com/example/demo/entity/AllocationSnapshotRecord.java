@@ -15,19 +15,19 @@ public class AllocationSnapshotRecord {
 
     private LocalDateTime snapshotDate;
 
-    // 🔥 total portfolio value
+    
     private Double totalValue;
 
-    // snapshot data (map as string)
+    
     private String snapshotData;
 
-    // JPA default constructor
+    
     public AllocationSnapshotRecord() {
         this.snapshotDate = LocalDateTime.now();
         this.totalValue = 0.0;
     }
 
-    // Existing constructor
+   
     public AllocationSnapshotRecord(Long investorId,
                                     LocalDateTime snapshotDate,
                                     Double totalValue,
@@ -38,7 +38,7 @@ public class AllocationSnapshotRecord {
         this.snapshotData = snapshotData;
     }
 
-    // Constructor used by service
+    
     public AllocationSnapshotRecord(Long investorId, String snapshotData) {
         this.investorId = investorId;
         this.snapshotData = snapshotData;
@@ -66,14 +66,12 @@ public class AllocationSnapshotRecord {
         return snapshotData;
     }
 
-    /* =====================================================
-       🔥🔥🔥 THIS IS THE MISSING METHOD (MAIN FIX)
-       ===================================================== */
+    
     public Double getTotalPortfolioValue() {
         return totalValue;
     }
 
-    // keep normal getter also (safe)
+    
     public Double getTotalValue() {
         return totalValue;
     }

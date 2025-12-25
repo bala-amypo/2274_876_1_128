@@ -17,7 +17,7 @@ public class HoldingRecord {
     @Enumerated(EnumType.STRING)
     private AssetClassType assetClass;
 
-    // 🔥 TEST EXPECTS FIELD NAME = value
+    
     private Double value;
 
     private LocalDateTime createdAt;
@@ -52,12 +52,12 @@ public class HoldingRecord {
         return assetClass;
     }
 
-    // 🔥 ORIGINAL getter
+    
     public Double getValue() {
         return value;
     }
 
-    // 🔥🔥🔥 TEST ALSO CALLS THIS (ALIAS)
+    
     public Double getCurrentValue() {
         return value;
     }
@@ -66,7 +66,7 @@ public class HoldingRecord {
         this.value = value;
     }
 
-    // 🔥 TEST USES THIS
+    
     public boolean isEmpty() {
         return value == null || value == 0.0;
     }

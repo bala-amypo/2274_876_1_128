@@ -31,13 +31,13 @@ public class InvestorProfile {
 
     private LocalDateTime createdAt;
 
-    // ✅ No-args constructor (JPA + default values)
+    
     public InvestorProfile() {
         this.active = true;
         this.createdAt = LocalDateTime.now();
     }
 
-    // ✅ FULL constructor (already correct)
+    
     public InvestorProfile(Long id, String investorId, String fullName,
                            String email, Boolean active, LocalDateTime createdAt) {
         this.id = id;
@@ -48,7 +48,7 @@ public class InvestorProfile {
         this.createdAt = createdAt;
     }
 
-    // 🔥🔥🔥 THIS IS THE IMPORTANT ONE (TEST NEEDS THIS)
+    
     public InvestorProfile(String investorId, String fullName,
                            String email, boolean active) {
         this.investorId = investorId;
@@ -58,8 +58,7 @@ public class InvestorProfile {
         this.createdAt = LocalDateTime.now();
     }
 
-    // ===== Getters & Setters =====
-
+    
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
