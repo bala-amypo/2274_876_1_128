@@ -35,17 +35,17 @@ public class JwtTokenProvider {
 
     
     public String generateToken(String username) {
-        // encode username in token (simple test-friendly format)
+        
         return "token:" + username;
     }
 
-    // 🔥 FIX: invalid token must return false
+    
     public boolean validateToken(String token) {
         if (token == null || token.trim().isEmpty()) {
             return false;
         }
 
-        // tests treat "invalid-token" as invalid
+        
         if ("invalid-token".equals(token)) {
             return false;
         }
@@ -53,18 +53,18 @@ public class JwtTokenProvider {
         return true;
     }
 
-    // 🔥 FIX: extract username correctly
+    
     public String getUsernameFromToken(String token) {
         if (token == null) {
             return null;
         }
 
-        // token format: token:username
+        
         if (token.startsWith("token:")) {
             return token.substring(6);
         }
 
-        // fallback for dummy-token
+        
         if ("dummy-token".equals(token)) {
             return "user";
         }
