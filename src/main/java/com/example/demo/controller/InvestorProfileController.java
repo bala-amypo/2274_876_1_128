@@ -47,7 +47,7 @@ public class InvestorProfileController {
         return service.updateInvestorStatus(id, request.getActive());
     }
 
-    // 🔥🔥🔥 UPDATED: Optional handling
+    
     @GetMapping("/lookup/{investorId}")
     public InvestorProfile lookupByInvestorId(
             @PathVariable String investorId) {
@@ -58,7 +58,7 @@ public class InvestorProfileController {
                                 "Investor not found with investorId: " + investorId));
     }
 
-    // 🔥 OPTIONAL but SAFE (email lookup – test friendly)
+    
     @GetMapping("/lookup/email/{email}")
     public InvestorProfile lookupByEmail(@PathVariable String email) {
         return service.findByEmail(email)

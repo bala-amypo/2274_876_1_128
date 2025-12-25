@@ -17,33 +17,33 @@ public class RebalancingAlertController {
         this.alertService = alertService;
     }
 
-    // Create alert
+    
     @PostMapping
     public RebalancingAlertRecord createAlert(
             @RequestBody RebalancingAlertRecord alert) {
         return alertService.createAlert(alert);
     }
 
-    // Resolve alert
+    
     @PutMapping("/{id}/resolve")
     public RebalancingAlertRecord resolveAlert(@PathVariable Long id) {
         return alertService.resolveAlert(id);
     }
 
-    // Get alerts by investor
+    
     @GetMapping("/investor/{investorId}")
     public List<RebalancingAlertRecord> getAlertsByInvestor(
             @PathVariable Long investorId) {
         return alertService.getAlertsByInvestor(investorId);
     }
 
-    // Get alert by id
+    
     @GetMapping("/{id}")
     public RebalancingAlertRecord getAlertById(@PathVariable Long id) {
         return alertService.getAlertById(id);
     }
 
-    // Get all alerts
+    
     @GetMapping
     public List<RebalancingAlertRecord> getAllAlerts() {
         return alertService.getAllAlerts();
