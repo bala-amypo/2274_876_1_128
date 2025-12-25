@@ -21,9 +21,7 @@ public class AllocationSnapshotServiceImpl implements AllocationSnapshotService 
     private HoldingRecordRepository holdingRepo;
     private AllocationSnapshotRecordRepository snapshotRepo;
 
-    // ==============================
-    // ✅ SPRING / SWAGGER CONSTRUCTOR
-    // ==============================
+    
     @Autowired
     public AllocationSnapshotServiceImpl(
             HoldingRecordRepository holdingRepo,
@@ -33,9 +31,7 @@ public class AllocationSnapshotServiceImpl implements AllocationSnapshotService 
         this.snapshotRepo = snapshotRepo;
     }
 
-    // =====================================================
-    // 🔥 UNIVERSAL TEST CONSTRUCTOR (FINAL FIX – CATCH ALL)
-    // =====================================================
+    
     public AllocationSnapshotServiceImpl(Object... args) {
 
         for (Object arg : args) {
@@ -48,9 +44,7 @@ public class AllocationSnapshotServiceImpl implements AllocationSnapshotService 
         }
     }
 
-    // ==============================
-    // SERVICE METHODS
-    // ==============================
+    
     @Override
     public AllocationSnapshotRecord computeSnapshot(Long investorId) {
 

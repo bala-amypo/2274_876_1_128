@@ -33,13 +33,13 @@ public class InvestorProfileServiceImpl implements InvestorProfileService {
                                 "Investor not found with id: " + id));
     }
 
-    // 🔥🔥🔥 UPDATED: return Optional
+    
     @Override
     public Optional<InvestorProfile> findByInvestorId(String investorId) {
         return repository.findByInvestorId(investorId);
     }
 
-    // 🔥🔥🔥 UPDATED: return Optional
+    
     @Override
     public Optional<InvestorProfile> findByEmail(String email) {
         return repository.findByEmail(email);
