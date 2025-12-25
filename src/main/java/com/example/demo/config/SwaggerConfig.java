@@ -1,23 +1,4 @@
-// package com.example.demo.config;
 
-// import io.swagger.v3.oas.models.OpenAPI;
-// import io.swagger.v3.oas.models.servers.Server;
-// import org.springframework.context.annotation.Bean;
-// import org.springframework.context.annotation.Configuration;
-// import java.util.List;
-
-// @Configuration
-// public class SwaggerConfig {
-
-//     @Bean
-//     public OpenAPI customOpenAPI() {
-//         return new OpenAPI()
-//                 // You need to change the port as per your server
-//                 .servers(List.of(
-//                         new Server().url("https://9164.32procr.amypo.ai/")
-//                 ));
-//         }
-// }
 
 package com.example.demo.config;
 
@@ -39,13 +20,13 @@ public class SwaggerConfig {
     public OpenAPI customOpenAPI() {
 
         return new OpenAPI()
-                // Server URL
+               
                 .servers(List.of(
                         new Server().url("https://9164.32procr.amypo.ai/")
                 ))
-                // 🔐 Security requirement (THIS enables Authorize button)
+                
                 .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
-                // 🔐 JWT scheme definition
+               
                 .components(
                         new Components().addSecuritySchemes(
                                 "bearerAuth",
