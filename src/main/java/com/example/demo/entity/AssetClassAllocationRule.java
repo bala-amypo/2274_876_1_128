@@ -8,7 +8,7 @@ import com.example.demo.entity.enums.AssetClassType;
 public class AssetClassAllocationRule {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)   // ✅ IMPORTANT
+    @GeneratedValue(strategy = GenerationType.IDENTITY)   //  IMPORTANT
     private Long id;
 
     private Long investorId;
