@@ -173,8 +173,10 @@ public class AllocationSnapshotServiceImpl implements AllocationSnapshotService 
     public AllocationSnapshotRecord getSnapshotById(Long id) {
         return snapshotRepo.findById(id)
                 // 🔥 TEST EXPECTS RuntimeException
-                .orElseThrow(() ->
-                        new RuntimeException("Snapshot not found"));
+                .orElseThrow(() -> new ResourceNotFoundException(
+        "Snapshot not found with id " + snapshotId
+));
+
     }
 
     @Override
