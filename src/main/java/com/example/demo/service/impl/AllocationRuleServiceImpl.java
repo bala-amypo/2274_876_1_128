@@ -139,8 +139,10 @@ public class AllocationRuleServiceImpl implements AllocationRuleService {
     public AssetClassAllocationRule getRuleById(Long id) {
         return ruleRepository.findById(id)
                 // 🔥 TEST EXPECTS RuntimeException
-                .orElseThrow(() ->
-                        new RuntimeException("Allocation rule not found"));
+               .orElseThrow(() -> new ResourceNotFoundException(
+        "Allocation rule not found with id " + ruleId
+));
+
     }
 
     @Override

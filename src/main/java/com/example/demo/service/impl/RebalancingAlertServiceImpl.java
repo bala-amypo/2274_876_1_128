@@ -114,8 +114,10 @@ public class RebalancingAlertServiceImpl implements RebalancingAlertService {
         RebalancingAlertRecord alert =
                 alertRepo.findById(id)
                         // 🔥 TEST EXPECTS RuntimeException
-                        .orElseThrow(() ->
-                                new RuntimeException("Alert not found"));
+                       .orElseThrow(() -> new ResourceNotFoundException(
+        "Alert not found with id " + alertId
+));
+
 
         alert.setResolved(true);
         return alertRepo.save(alert);
