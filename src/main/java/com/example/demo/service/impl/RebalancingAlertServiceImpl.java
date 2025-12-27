@@ -70,6 +70,79 @@
 
 
 
+// package com.example.demo.service.impl;
+
+// import java.time.LocalDateTime;
+// import java.util.List;
+
+// import org.springframework.stereotype.Service;
+
+// import com.example.demo.entity.RebalancingAlertRecord;
+// import com.example.demo.repository.RebalancingAlertRecordRepository;
+// import com.example.demo.service.RebalancingAlertService;
+
+// @Service
+// public class RebalancingAlertServiceImpl implements RebalancingAlertService {
+
+//     private final RebalancingAlertRecordRepository alertRepo;
+
+//     public RebalancingAlertServiceImpl(RebalancingAlertRecordRepository alertRepo) {
+//         this.alertRepo = alertRepo;
+//     }
+
+//     @Override
+//     public RebalancingAlertRecord createAlert(RebalancingAlertRecord alert) {
+
+//         if (alert == null
+//                 || alert.getCurrentPercentage() == null
+//                 || alert.getTargetPercentage() == null
+//                 || alert.getCurrentPercentage() <= alert.getTargetPercentage()) {
+
+//             throw new IllegalArgumentException(
+//                     "currentPercentage > targetPercentage");
+//         }
+
+//         alert.setResolved(false);
+//         alert.setAlertDate(LocalDateTime.now());
+
+//         return alertRepo.save(alert);
+//     }
+
+//     @Override
+//     public RebalancingAlertRecord resolveAlert(Long id) {
+
+//         RebalancingAlertRecord alert =
+//                 alertRepo.findById(id)
+//                         // 🔥 TEST EXPECTS RuntimeException
+//                        .orElseThrow(() -> new ResourceNotFoundException(
+//         "Alert not found with id " + alertId
+// ));
+
+
+//         alert.setResolved(true);
+//         return alertRepo.save(alert);
+//     }
+
+//     @Override
+//     public List<RebalancingAlertRecord> getAlertsByInvestor(Long investorId) {
+//         return alertRepo.findByInvestorId(investorId);
+//     }
+
+//     @Override
+//     public RebalancingAlertRecord getAlertById(Long id) {
+//         return alertRepo.findById(id)
+//                 // 🔥 same behaviour for tests
+//                 .orElseThrow(() ->
+//                         new RuntimeException("Alert not found"));
+//     }
+
+//     @Override
+//     public List<RebalancingAlertRecord> getAllAlerts() {
+//         return alertRepo.findAll();
+//     }
+// }
+
+
 package com.example.demo.service.impl;
 
 import java.time.LocalDateTime;
@@ -80,6 +153,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.entity.RebalancingAlertRecord;
 import com.example.demo.repository.RebalancingAlertRecordRepository;
 import com.example.demo.service.RebalancingAlertService;
+import com.example.demo.exception.ResourceNotFoundException; // ✅ ADDED
 
 @Service
 public class RebalancingAlertServiceImpl implements RebalancingAlertService {
@@ -113,11 +187,9 @@ public class RebalancingAlertServiceImpl implements RebalancingAlertService {
 
         RebalancingAlertRecord alert =
                 alertRepo.findById(id)
-                        // 🔥 TEST EXPECTS RuntimeException
-                       .orElseThrow(() -> new ResourceNotFoundException(
-        "Alert not found with id " + alertId
-));
-
+                        .orElseThrow(() -> new ResourceNotFoundException(
+                                "Alert not found with id " + id   // ✅ FIX
+                        ));
 
         alert.setResolved(true);
         return alertRepo.save(alert);
@@ -131,9 +203,9 @@ public class RebalancingAlertServiceImpl implements RebalancingAlertService {
     @Override
     public RebalancingAlertRecord getAlertById(Long id) {
         return alertRepo.findById(id)
-                // 🔥 same behaviour for tests
-                .orElseThrow(() ->
-                        new RuntimeException("Alert not found"));
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Alert not found with id " + id   // ✅ CONSISTENT
+                ));
     }
 
     @Override
@@ -141,5 +213,3 @@ public class RebalancingAlertServiceImpl implements RebalancingAlertService {
         return alertRepo.findAll();
     }
 }
-
-
