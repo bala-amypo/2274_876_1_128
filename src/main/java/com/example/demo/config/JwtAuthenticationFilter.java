@@ -124,7 +124,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                 String token = header.substring(7);
 
-                // 🔥 TEST EXPECTS invalid-token → NO authentication
+                
                 if (!jwtTokenProvider.validateToken(token)) {
                     SecurityContextHolder.clearContext();
                     chain.doFilter(request, response);
@@ -149,7 +149,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
             }
         } catch (Exception e) {
-            // 🔥 REQUIRED BY testSecurityContextNotSetForInvalidToken
+            
             SecurityContextHolder.clearContext();
         }
 
