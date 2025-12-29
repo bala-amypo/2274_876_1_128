@@ -45,7 +45,7 @@ public class RebalancingAlertServiceImpl implements RebalancingAlertService {
         RebalancingAlertRecord alert =
                 alertRepo.findById(id)
                         .orElseThrow(() -> new ResourceNotFoundException(
-                                "Alert not found with id " + id   // ✅ FIX
+                                "Alert not found with id " + id   // 
                         ));
 
         alert.setResolved(true);
@@ -61,7 +61,7 @@ public class RebalancingAlertServiceImpl implements RebalancingAlertService {
     public RebalancingAlertRecord getAlertById(Long id) {
         return alertRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(
-                        "Alert not found with id " + id   // ✅ CONSISTENT
+                        "Alert not found with id " + id   // 
                 ));
     }
 

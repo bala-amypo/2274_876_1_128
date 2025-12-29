@@ -23,7 +23,7 @@ public class HoldingRecordServiceImpl implements HoldingRecordService {
     @Override
     public HoldingRecord saveHolding(HoldingRecord record) {
 
-        // 🔥 REQUIRED BY testRecordHoldingInvalidValue
+        
         if (record == null ||
             record.getCurrentValue() == null ||
             record.getCurrentValue() <= 0) {
@@ -52,12 +52,12 @@ public class HoldingRecordServiceImpl implements HoldingRecordService {
         return repo.findByInvestorIdAndAssetClass(investorId, assetClass);
     }
 
-    // used by tests
+    
     public Optional<HoldingRecord> getHoldingById(Long id) {
         return repo.findById(id);
     }
 
-    // 🔥 tests call this method
+    
     public HoldingRecord recordHolding(HoldingRecord record) {
         return saveHolding(record);
     }

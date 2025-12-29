@@ -71,7 +71,7 @@ public class AllocationSnapshotServiceImpl implements AllocationSnapshotService 
                         snapshotMap.toString()
                 );
 
-        // ✅ CORRECT setter
+        
         record.setTotalValue(totalValue);
 
         return snapshotRepo.save(record);
