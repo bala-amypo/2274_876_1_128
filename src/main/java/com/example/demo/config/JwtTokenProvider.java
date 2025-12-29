@@ -24,11 +24,11 @@ public class JwtTokenProvider {
         this.validity = validity;
     }
 
-    // --------------------------------------------------
+    
     // TOKEN GENERATION
-    // --------------------------------------------------
+    
     public String generateToken(Authentication authentication, UserAccount user) {
-        // tests rely on username extraction
+        
         return "token:" + authentication.getName();
     }
 
@@ -36,16 +36,16 @@ public class JwtTokenProvider {
         return "token:" + username;
     }
 
-    // --------------------------------------------------
+    
     // TOKEN VALIDATION
-    // --------------------------------------------------
+    
     public boolean validateToken(String token) {
 
         if (token == null || token.trim().isEmpty()) {
             return false;
         }
 
-        // explicitly invalid patterns used in tests
+        
         if (token.contains(".")) {
             return false;
         }
@@ -54,9 +54,7 @@ public class JwtTokenProvider {
         return token.startsWith("token:");
     }
 
-    // --------------------------------------------------
-    // USERNAME EXTRACTION
-    // --------------------------------------------------
+   
     public String getUsernameFromToken(String token) {
 
         if (token == null) {
@@ -70,12 +68,12 @@ public class JwtTokenProvider {
         return null;
     }
 
-    // REQUIRED BY TESTS
+   
     public String getUsername(String token) {
         return getUsernameFromToken(token);
     }
 
-    // REQUIRED BY TESTS
+    
     public String getEmail(String token) {
         return getUsernameFromToken(token);
     }
